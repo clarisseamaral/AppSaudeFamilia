@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="#00000000">
+  <TextView
+      android:id="@+id/txtPergunta"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="44dp"
+      android:layout_marginLeft="44dp"
+      android:layout_marginTop="8dp"
+      android:text="TextView" />
+  <RadioGroup
+      android:id="@+id/rdOpcoes"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="44dp"
+      android:layout_marginLeft="44dp"
+      android:layout_marginTop="8dp">
+    <RadioButton
+        android:id="@+id/rbOpcao1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="RadioButton" />
+    <RadioButton
+        android:id="@+id/rbOpcao2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="RadioButton" />
+    <RadioButton
+        android:id="@+id/rbOpcao3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="RadioButton" />
+    <RadioButton
+        android:id="@+id/rbOpcao4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="RadioButton" />
+  </RadioGroup>
+  <EditText
+      android:id="@+id/txtResposta"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:ems="10"
+      android:inputType="textPersonName"
+      android:text="Name" />
+  <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/linearLayout1"
+      android:gravity="center_horizontal">
+    <Button
+        android:id="@+id/btnAnterior"
+        android:text="ANTERIOR"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+    <Button
+        android:id="@+id/btnProximo"
+        android:text="PRÓXIMO"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+  </LinearLayout>
+</LinearLayout>
