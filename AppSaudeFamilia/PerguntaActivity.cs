@@ -1,4 +1,5 @@
 using Android.App;
+using Android.Locations;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
@@ -13,11 +14,6 @@ namespace AppSaudeFamilia
     [Activity(Label = "Saúde Família")]
     public class PerguntaActivity : Activity
     {
-        public int IdQuestionario {
-            get {
-                return 1;
-            }
-        }
 
         public int QuestaoAtual { get; set; }
 
@@ -34,7 +30,6 @@ namespace AppSaudeFamilia
             CarregaElementosTela();
 
             PreencherPergunta(Perguntas[QuestaoAtual]);
-
         }
 
         #region ElementosTela
@@ -77,9 +72,16 @@ namespace AppSaudeFamilia
             rbOpcao4.Click += RbAlternativa_Click;
             btnEnviarColeta.Click += BtnEnviarColeta_Click;
             btnCancelar.Click += BtnCancelar_Click;
+            txtResposta.AfterTextChanged += TxtResposta_AfterTextChanged;  
         }
 
         #endregion
+
+        #region Eventos
+        private void TxtResposta_AfterTextChanged(object sender, Android.Text.AfterTextChangedEventArgs e)
+        {
+            Perguntas[QuestaoAtual].Resposta = txtResposta.Text;
+        }
 
         private void BtnEnviarColeta_Click(object sender, EventArgs e)
         {
@@ -119,6 +121,24 @@ namespace AppSaudeFamilia
             }
         }
 
+        private void BtnProximo_Click(object sender, EventArgs e)
+        {
+            QuestaoAtual++;  //Atualiza posição pergunta
+            VerificarResposta();
+            PreencherPergunta(Perguntas[QuestaoAtual]);
+            VerificarPosicaoPergunta();
+        }
+
+        private void BtnAnterior_Click(object sender, EventArgs e)
+        {
+            QuestaoAtual--; //Atualiza posição pergunta
+            VerificarResposta();
+            PreencherPergunta(Perguntas[QuestaoAtual]);
+            VerificarPosicaoPergunta();
+        }
+
+        #endregion
+
         private async Task<List<ListaPerguntasSaidaDTO>> BuscarPerguntas()
         {
             ProgressDialog loading = null;
@@ -137,7 +157,6 @@ namespace AppSaudeFamilia
 
             return saida;
         }
-
 
         private void PreencherPergunta(ListaPerguntasSaidaDTO pergunta)
         {
@@ -210,25 +229,6 @@ namespace AppSaudeFamilia
             rbOpcao.Text = texto;
             rbOpcao.Checked = opcapSelecionada;
             rbOpcao.Visibility = ViewStates.Visible;
-        }
-
-        private void BtnProximo_Click(object sender, EventArgs e)
-        {
-            QuestaoAtual++;  //Atualiza posição pergunta
-            VerificarResposta();
-            Perguntas[QuestaoAtual].Resposta = txtResposta.Text;
-            PreencherPergunta(Perguntas[QuestaoAtual]);
-            VerificarPosicaoPergunta();
-            VerificarResposta();
-        }
-
-        private void BtnAnterior_Click(object sender, EventArgs e)
-        {
-            QuestaoAtual--; //Atualiza posição pergunta
-            VerificarResposta();
-            Perguntas[QuestaoAtual].Resposta = txtResposta.Text;
-            PreencherPergunta(Perguntas[QuestaoAtual]);
-            VerificarPosicaoPergunta();
         }
 
         private void VerificarPosicaoPergunta()

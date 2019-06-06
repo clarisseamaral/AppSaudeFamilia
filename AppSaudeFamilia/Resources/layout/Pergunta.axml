@@ -12,7 +12,7 @@
 		android:layout_height="28.5dp"
 		android:id="@+id/btnCancelarQuestionario"
 		android:background="@drawable/cancelar"
-		android:layout_marginLeft="310dp"
+		android:layout_marginLeft="330dp"
 		android:layout_marginRight="0.0dp"
 		android:layout_marginTop="5dp"
 		android:backgroundTint="#ff4db6ac" 
@@ -125,7 +125,7 @@
 		android:layout_height="wrap_content"
 		android:id="@+id/btnConcluirQuestionario"
 		android:background="@color/button"
-		android:layout_marginTop="40px"
+		android:layout_marginTop="70px"
 		android:textColor="@color/primaryText"
 		android:textSize="15dp" />
 </LinearLayout>
