@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/fundo">
-    <Button
-        android:id="@+id/btnNovaColeta"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btnNovaColeta" />
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/fundo">
+	<Button
+		android:id="@+id/btnNovaColeta"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/btnNovaColeta" />
 	<Button
 		android:id="@+id/btnSincronizarColeta"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:text="@string/btnSincronizarColeta"
 		android:visibility="invisible" />
+	<Button
+		android:text="Sair"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/btnSair" />
 </LinearLayout>

@@ -17,13 +17,9 @@ namespace AppSaudeFamilia
     [Application]
     public class Aplicacao : Application
     {
-        public static string Token { get; set; }
+        public static int Fluxo { get; set; }
 
-        public static void Deslogar()
-        {
-            //Token = string.Empty;
-            //TODO: apaggar registro da tbusuario
-        }
+        public static string Token { get; set; }
 
         public Aplicacao(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
         {
@@ -33,8 +29,6 @@ namespace AppSaudeFamilia
         public override void OnCreate()
         {
             base.OnCreate();
-
-            //UsuarioLogado = new List<UsuarioLogadoDTO>();
 
             UtilDataBase.CreateDataBase();
 
@@ -49,7 +43,14 @@ namespace AppSaudeFamilia
 
         public static void ResetarAplicacao()
         {
-            //TODO: apaggar registro da tbusuario
+            Token = string.Empty;
+            UtilDataBase.Delete(UsuarioDB.TableName);
+            UtilDataBase.Delete(QuestionarioDB.TableName);
         }
+    }
+
+    public class Constantes
+    {
+        public static int FLUXO_DESLOGAR { get { return 9159; } }
     }
 }

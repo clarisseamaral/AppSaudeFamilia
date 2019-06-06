@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:id="@+id/linearLayout3"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+        <TextView
+            android:id="@+id/txtTituloSair"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:text="Titulo"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:paddingTop="25dp"
+            android:paddingBottom="25dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:background="@drawable/BackgroundModalTopo" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:id="@+id/view1" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout2"
+            android:background="@android:color/transparent">
+            <Button
+                android:background="@drawable/EfeitoPressionadoModalOpcaoEsq"
+                android:text="Não"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btNao"
+                android:textSize="17dp"
+                android:textColor="@android:color/holo_blue_dark"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray"
+                android:id="@+id/view2" />
+            <Button
+                android:text="Sim"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btSim"
+                android:textSize="17dp"
+                android:textColor="@android:color/holo_blue_dark"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/EfeitoPressionadoModalOpcaoDir"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

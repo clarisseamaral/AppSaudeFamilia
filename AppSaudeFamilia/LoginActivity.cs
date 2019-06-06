@@ -15,9 +15,25 @@ namespace AppSaudeFamilia
     [Activity(Label = "Saúde Família", MainLauncher = true, Icon = "@drawable/icon")]
     public class LoginActivity : Activity
     {
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+            if (Aplicacao.Fluxo == Constantes.FLUXO_DESLOGAR)
+            {
+                var load = ProgressDialog.Show(this, "Deslogando", "Por favor aguarde!", true);
+                await Task.Run(() =>
+                {
+
+                    Aplicacao.ResetarAplicacao();
+
+
+                    if (load.IsShowing && load != null)
+                    {
+                        load.Dismiss();
+                    }
+                });
+            }
 
             var dtUsuario = UtilDataBase.GetItems(UsuarioDB.TableName);
             if (dtUsuario.Rows.Count > 0)
@@ -31,17 +47,7 @@ namespace AppSaudeFamilia
 
                 FindViewById<Button>(Resource.Id.btnLogin).Click += BtnLogin_Click;
             }
-
-            ///if (Aplicacao.Fluxo == Constantes.FLUXO_DESLOGAR)
-            //{
-            //    ProgressDialog load = ProgressDialog.Show(this, "Deslogando", "Por favor aguarde!", true);
-            //    await Task.Run(() =>
-            //    {
-            //        Aplicacao.ResetarAplicacao();
-            //        UtilDataBase.Delete(UsuarioDB.TableName);
-            //    });
-            //    }
-
+           
         }
 
         private async void BtnLogin_Click(object sender, EventArgs e)
@@ -54,8 +60,20 @@ namespace AppSaudeFamilia
             {
                 if (!string.IsNullOrEmpty(txtUsuario.Text) && !string.IsNullOrEmpty(txtSenha.Text))
                 {
+                    ProgressDialog loading = null;
+
+                    RunOnUiThread(() =>
+                    {
+                        loading = ProgressDialog.Show(this, "Entrando", "Isso pode demorar um pouco.\nFavor aguardar!", true);
+                    });
+
                     var entrada = new AutenticacaoEntradaDTO() { Usuario = txtUsuario.Text.Trim(), Senha = txtSenha.Text };
                     var saida = await WebService.PostAsync<AutenticacaoEntradaDTO, AutenticacaoSaidaDTO>(entrada, CaminhoWebService.AUTENTICACAO);
+
+                    if (loading.IsShowing && loading != null)
+                    {
+                        loading.Dismiss();
+                    }
 
                     VerificaLogin(saida.Token);
                 }
@@ -90,12 +108,6 @@ namespace AppSaudeFamilia
         {
             var activity = new Intent(this, typeof(TelaInicialActivity));
             StartActivity(activity);
-        }
-
-        private bool VerificaUsuarioLogado()
-        {
-            //TODO : buscar da base tabbela usuario
-            return true;
         }
 
         private void SalvaBancoLocal(string token)

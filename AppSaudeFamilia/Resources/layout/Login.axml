@@ -24,7 +24,7 @@
                 android:id="@+id/txtUsuario"
                 android:layout_width="345.0dp"
                 android:inputType="text"
-                android:hint="Usuario"
+                android:hint="Usuário"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
                 android:layout_marginTop="15dp"

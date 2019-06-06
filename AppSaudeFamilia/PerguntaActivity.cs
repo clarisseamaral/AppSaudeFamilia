@@ -35,14 +35,13 @@ namespace AppSaudeFamilia
 
             PreencherPergunta(Perguntas[QuestaoAtual]);
 
-
-
         }
 
         #region ElementosTela
 
         private Button btnAnterior;
         private Button btnProximo;
+        private Button btnCancelar;
         private Button btnEnviarColeta;
         private TextView txtPergunta;
         private TextView txtResposta;
@@ -56,6 +55,7 @@ namespace AppSaudeFamilia
         {
             btnAnterior = FindViewById<Button>(Resource.Id.btnAnterior);
             btnProximo = FindViewById<Button>(Resource.Id.btnProximo);
+            btnCancelar = FindViewById<Button>(Resource.Id.btnCancelarQuestionario);
             txtPergunta = FindViewById<TextView>(Resource.Id.txtPergunta);
             txtResposta = FindViewById<TextView>(Resource.Id.txtResposta);
             btnEnviarColeta = FindViewById<Button>(Resource.Id.btnConcluirQuestionario);
@@ -76,13 +76,26 @@ namespace AppSaudeFamilia
             rbOpcao3.Click += RbAlternativa_Click;
             rbOpcao4.Click += RbAlternativa_Click;
             btnEnviarColeta.Click += BtnEnviarColeta_Click;
+            btnCancelar.Click += BtnCancelar_Click;
         }
 
         #endregion
 
         private void BtnEnviarColeta_Click(object sender, EventArgs e)
         {
-            InserirBancoLocal();
+            if(Perguntas.Where(p => p.IdAlternativa == 0 && String.IsNullOrEmpty(p.Resposta)).Count() > 0)
+            {
+                Modal.ExibirModal(this, "Pergunta não preenchida", "", "Nem todas as perguntas foram respondidas. Gentileza verificar.");
+            }
+            else
+            {
+                InserirBancoLocal();
+            }
+        }
+
+        private void BtnCancelar_Click(object sender, EventArgs e)
+        {
+            base.OnBackPressed();
         }
 
         private void RbAlternativa_Click(object sender, EventArgs e)
@@ -236,8 +249,7 @@ namespace AppSaudeFamilia
                 btnProximo.Visibility = ViewStates.Visible;
             }
 
-            btnEnviarColeta.Visibility = Perguntas.Where(p => p.IdAlternativa == 0 && String.IsNullOrEmpty(p.Resposta)).Count() > 0 ?
-                ViewStates.Invisible : ViewStates.Visible;
+           
         }
 
         private void VerificarResposta()
