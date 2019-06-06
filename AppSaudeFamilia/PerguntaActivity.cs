@@ -1,28 +1,42 @@
+using Android.App;
+using Android.OS;
+using Android.Widget;
+using AppSaudeFamilia.Servico;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
+using System.Threading.Tasks;
 using Android.Views;
-using Android.Widget;
 
 namespace AppSaudeFamilia
 {
-    [Activity(Label = "PerguntaActivity")]
+    [Activity(Label = "Saúde Família")]
     public class PerguntaActivity : Activity
     {
-        protected override void OnCreate(Bundle savedInstanceState)
-        {
-            base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.Pergunta);
-            // Create your application here
+        public int IdQuestionario {
+            get {
+                return 1;
+            }
         }
 
+        public int QuestaoAtual { get; set; }
+
         public List<ListaPerguntasSaidaDTO> Perguntas { get; set; }
+
+        protected override async void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+
+            Perguntas = await BuscarPerguntas();
+
+            SetContentView(Resource.Layout.Pergunta);
+
+            CarregaElementosTela();
+
+            PreencherPergunta(Perguntas[QuestaoAtual]);
+
+           
+
+        }
 
         #region ElementosTela
 
@@ -36,16 +50,6 @@ namespace AppSaudeFamilia
         private RadioButton rbOpcao3;
         private RadioButton rbOpcao4;
 
-        #endregion
-
-        protected override void OnCreate(Bundle savedInstanceState)
-        {
-            base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.Coleta);
-
-            CarregaElementosTela();
-        }
-
         private void CarregaElementosTela()
         {
             btnAnterior = FindViewById<Button>(Resource.Id.btnAnterior);
@@ -57,35 +61,64 @@ namespace AppSaudeFamilia
             rbOpcao2 = FindViewById<RadioButton>(Resource.Id.rbOpcao2);
             rbOpcao3 = FindViewById<RadioButton>(Resource.Id.rbOpcao3);
             rbOpcao4 = FindViewById<RadioButton>(Resource.Id.rbOpcao4);
+
+            QuestaoAtual = 0;
+
+            btnAnterior.Click += BtnAnterior_Click;
+
+            btnProximo.Click += BtnProximo_Click;
         }
 
-        private async void ListarPerguntas()
-        {
-            var saida = await WebService.GetAsync<List<ListaPerguntasSaidaDTO>>(string.Empty);
+        #endregion
 
-            var pergunta = saida.First();
+        private async Task<List<ListaPerguntasSaidaDTO>> BuscarPerguntas()
+        {
+            ProgressDialog loading = null;
+
+            RunOnUiThread(() =>
+            {
+                loading = ProgressDialog.Show(this, "Buscando perguntas", "Isso pode demorar um pouco.\nFavor aguardar!", true);
+            });
+
+            var saida = await WebService.GetAsync<List<ListaPerguntasSaidaDTO>>(CaminhoWebService.LISTAR_PERGUNTAS, Aplicacao.Token);
+
+            if (loading.IsShowing && loading != null)
+            {
+                loading.Dismiss();
+            }
+
+            return saida;
+        }
+
+
+        private void PreencherPergunta(ListaPerguntasSaidaDTO pergunta)
+        {
 
             txtPergunta.Text = pergunta.Descricao;
 
-            if (pergunta.TipoPergunta == "1")  //Multipla escolha
+            if (pergunta.IdTipoPergunta == 1)  //Multipla escolha
             {
                 txtResposta.Visibility = Android.Views.ViewStates.Invisible;
                 rdOpcoes.Visibility = Android.Views.ViewStates.Visible;
                 PreencherAlternativas(pergunta.Alternativas);
             }
-            else if (pergunta.TipoPergunta == "2")
+            else if (pergunta.IdTipoPergunta == 2)
             {
                 txtResposta.Visibility = Android.Views.ViewStates.Visible;
                 rdOpcoes.Visibility = Android.Views.ViewStates.Invisible;
+                rbOpcao1.Visibility = Android.Views.ViewStates.Invisible;
+                rbOpcao2.Visibility = Android.Views.ViewStates.Invisible;
+                rbOpcao3.Visibility = Android.Views.ViewStates.Invisible;
+                rbOpcao4.Visibility = Android.Views.ViewStates.Invisible;
             }
         }
 
         private void PreencherAlternativas(List<Alternativa> alternativa)
         {
-            rbOpcao1.Text = string.Empty;
-            rbOpcao2.Text = string.Empty;
-            rbOpcao3.Text = string.Empty;
-            rbOpcao4.Text = string.Empty;
+            rbOpcao1.Visibility = ViewStates.Invisible;
+            rbOpcao2.Visibility = ViewStates.Invisible;
+            rbOpcao3.Visibility = ViewStates.Invisible;
+            rbOpcao4.Visibility = ViewStates.Invisible;
 
             for (int i = 0; i < alternativa.Count; i++)
             {
@@ -93,27 +126,56 @@ namespace AppSaudeFamilia
                 {
                     case 0:
                         rbOpcao1.Text = alternativa[i].Texto;
+                        rbOpcao1.Visibility = ViewStates.Visible;
                         break;
                     case 1:
                         rbOpcao2.Text = alternativa[i].Texto;
+                        rbOpcao2.Visibility = ViewStates.Visible;
                         break;
                     case 2:
                         rbOpcao3.Text = alternativa[i].Texto;
+                        rbOpcao3.Visibility = ViewStates.Visible;
                         break;
                     case 3:
                         rbOpcao4.Text = alternativa[i].Texto;
+                        rbOpcao4.Visibility = ViewStates.Visible;
                         break;
                 }
             }
         }
 
-
-        private void BtnProimo_Click(object sender, EventArgs e)
+        private void BtnProximo_Click(object sender, EventArgs e)
         {
+            QuestaoAtual++;
+            PreencherPergunta(Perguntas[QuestaoAtual]);
+            VerificarPosicaoPergunta();
         }
 
         private void BtnAnterior_Click(object sender, EventArgs e)
         {
+            QuestaoAtual--;
+            PreencherPergunta(Perguntas[QuestaoAtual]);
+            VerificarPosicaoPergunta();
+        }
+
+        private void VerificarPosicaoPergunta()
+        {
+            if (QuestaoAtual + 1 == Perguntas.Count)
+            {
+                btnProximo.Visibility = ViewStates.Invisible;
+                btnAnterior.Visibility = ViewStates.Visible;
+            }
+            else if (QuestaoAtual == 0)
+            {
+                btnAnterior.Visibility = ViewStates.Invisible;
+                btnProximo.Visibility = ViewStates.Visible;
+            }
+            else
+            {
+                btnAnterior.Visibility = ViewStates.Visible;
+                btnProximo.Visibility = ViewStates.Visible;
+            }
+
         }
     }
 }

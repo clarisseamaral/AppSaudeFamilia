@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="btnNovaColeta">Nova Coleta</string>
-    <string name="ApplicationName">AppSaudeFamilia</string>
+    <string name="btnSincronizarColeta">Sincronizar Coleta</string>
+    <string name="ApplicationName">Saúde Família</string>
+    <string name="LoadingTitulo">Carregando</string>
+    <string name="LoadingMensagem">Aguarde...</string>
+    <string name="AutenticacaoInvalidaTitulo"></string>
+    <string name="AutenticacaoInvalidaMensagem">Verifique se os campos foram preenchidos corretamente.</string>
 </resources>

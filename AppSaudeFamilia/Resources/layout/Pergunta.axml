@@ -3,69 +3,113 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="#00000000">
-  <TextView
-      android:id="@+id/txtPergunta"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="44dp"
-      android:layout_marginLeft="44dp"
-      android:layout_marginTop="8dp"
-      android:text="TextView" />
-  <RadioGroup
-      android:id="@+id/rdOpcoes"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="44dp"
-      android:layout_marginLeft="44dp"
-      android:layout_marginTop="8dp">
-    <RadioButton
-        android:id="@+id/rbOpcao1"
+    android:background="@color/fundo"
+    android:paddingRight="20dp"
+    android:paddingLeft="20dp">
+    <TextView
+        android:id="@+id/txtPergunta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="TextView"
+        android:textColor="@color/primaryText"
+        android:textSize="15dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:id="@+id/view1"
+        android:layout_marginBottom="0.0dp"
+        android:backgroundTint="#00000000" />
+    <RadioGroup
+        android:id="@+id/rdOpcoes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="RadioButton" />
-    <RadioButton
-        android:id="@+id/rbOpcao2"
-        android:layout_width="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="8dp">
+        <RadioButton
+            android:id="@+id/rbOpcao1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="RadioButton"
+            android:textColor="@color/primaryText"
+            android:buttonTint="#ffb4b4b4"
+            android:textSize="15dp" />
+        <RadioButton
+            android:id="@+id/rbOpcao2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="RadioButton"
+            android:backgroundTint="#00000000"
+            android:buttonTint="#ffb4b4b4"
+            android:textColor="@color/primaryText"
+            android:textSize="15dp" />
+        <RadioButton
+            android:id="@+id/rbOpcao3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="RadioButton"
+            android:textSize="15dp"
+            android:textColor="@color/primaryText"
+            android:buttonTint="#ffb4b4b4"
+            android:visibility="invisible" />
+        <RadioButton
+            android:id="@+id/rbOpcao4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="RadioButton"
+            android:textColor="@color/primaryText"
+            android:textSize="15dp"
+            android:buttonTint="#ffb4b4b4"
+            android:visibility="invisible" />
+    </RadioGroup>
+    <EditText
+        android:id="@+id/txtResposta"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="RadioButton" />
-    <RadioButton
-        android:id="@+id/rbOpcao3"
-        android:layout_width="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Resposta"
+        android:textColor="@color/primaryText"
+        android:textColorHighlight="@color/primaryText"
+        android:textColorHint="@color/primaryText"
+        android:textSize="15dp" />
+    <AbsoluteLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="RadioButton" />
-    <RadioButton
-        android:id="@+id/rbOpcao4"
-        android:layout_width="wrap_content"
+        android:id="@+id/absoluteLayout1"
+        android:layout_gravity="center_horizontal" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:id="@+id/linearLayout1"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="RadioButton" />
-  </RadioGroup>
-  <EditText
-      android:id="@+id/txtResposta"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:ems="10"
-      android:inputType="textPersonName"
-      android:text="Name" />
-  <LinearLayout
-      android:orientation="horizontal"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:id="@+id/linearLayout1"
-      android:gravity="center_horizontal">
-    <Button
-        android:id="@+id/btnAnterior"
-        android:text="ANTERIOR"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
-    <Button
-        android:id="@+id/btnProximo"
-        android:text="PRÓXIMO"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
-  </LinearLayout>
+        android:layout_marginTop="100dp">
+        <Button
+            android:id="@+id/btnAnterior"
+            android:text="ANTERIOR"
+            android:textColor="@color/primaryText"
+            android:background="@color/button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:visibility="invisible" />
+        <Button
+            android:id="@+id/btnProximo"
+            android:text="PRÓXIMO"
+            android:background="@color/button"
+            android:textColor="@color/primaryText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="30dp" />
+    </LinearLayout>
 </LinearLayout>
