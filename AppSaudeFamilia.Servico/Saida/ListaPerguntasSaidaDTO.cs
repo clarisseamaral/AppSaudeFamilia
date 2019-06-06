@@ -20,6 +20,10 @@ namespace AppSaudeFamilia.Servico
 
         [DataMember(Name = "alternativas")]
         public List<Alternativa> Alternativas { get; set; }
+
+        public string Resposta { get; set; }
+
+        public int IdAlternativa { get; set; }
     }
 
     [DataContract]

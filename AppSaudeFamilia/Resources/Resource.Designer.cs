@@ -105,6 +105,9 @@ namespace AppSaudeFamilia
 			// aapt resource value: 0x7f08001f
 			public const int btnAnterior = 2131230751;
 			
+			// aapt resource value: 0x7f080021
+			public const int btnConcluirQuestionario = 2131230753;
+			
 			// aapt resource value: 0x7f080008
 			public const int btnLogin = 2131230728;
 			
@@ -141,8 +144,8 @@ namespace AppSaudeFamilia
 			// aapt resource value: 0x7f08000e
 			public const int linearSairSistema = 2131230734;
 			
-			// aapt resource value: 0x7f080021
-			public const int menuLateral = 2131230753;
+			// aapt resource value: 0x7f080022
+			public const int menuLateral = 2131230754;
 			
 			// aapt resource value: 0x7f080019
 			public const int rbOpcao1 = 2131230745;
