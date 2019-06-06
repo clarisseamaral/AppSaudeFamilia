@@ -11,8 +11,9 @@ namespace AppSaudeFamilia.DataLocal
         public int IdResposta { get; set; }
         public string Resposta { get; set; }
         public string Data { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
 
-        //Longitude, latitude
         public QuestionarioDB(DataRow dr)
         {
             ConvertDr(dr);
@@ -26,8 +27,9 @@ namespace AppSaudeFamilia.DataLocal
                          IdPergunta INTEGER, 
                          IdResposta INTEGER, 
                          Resposta ntext, 
-                         Data ntext                   
-                            ";
+                         Data ntext,
+                         Longitude ntext, 
+                         Latitude ntext";
             }
         }
 
@@ -39,14 +41,17 @@ namespace AppSaudeFamilia.DataLocal
         public string InsertQuery {
             get {
                 var sb = new StringBuilder();
-                sb.AppendFormat("insert into {0} (IdQuestionario, IdPergunta, IdResposta, Resposta, Data)", TableName);
+                sb.AppendFormat("insert into {0} (IdQuestionario, IdPergunta, IdResposta, Resposta, Data, Longitude, Latitude)", TableName);
 
                 sb.Append(" values(");
                 sb.AppendFormat("'{0}',", this.IdQuestionario);
                 sb.AppendFormat("'{0}',", this.IdPergunta);
                 sb.AppendFormat("'{0}',", this.IdResposta);
                 sb.AppendFormat("'{0}',", this.Resposta);
-                sb.AppendFormat("'{0}'", this.Data);
+                sb.AppendFormat("'{0}',", this.Data);
+                sb.AppendFormat("'{0}',", this.Longitude);
+                sb.AppendFormat("'{0}'", this.Latitude);
+
                 sb.Append(")");
 
                 return sb.ToString();
@@ -76,6 +81,8 @@ namespace AppSaudeFamilia.DataLocal
 
             Resposta = dr["Resposta"].ToString();
             Data = dr["Data"].ToString();
+            Longitude = dr["Longitude"].ToString();
+            Latitude = dr["Latitude"].ToString();
         }
     }
 }

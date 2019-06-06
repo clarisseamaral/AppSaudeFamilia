@@ -114,23 +114,23 @@ namespace AppSaudeFamilia
 		public partial class Id
 		{
 			
+			// aapt resource value: 0x7f080023
+			public const int absoluteLayout1 = 2131230755;
+			
 			// aapt resource value: 0x7f080024
-			public const int absoluteLayout1 = 2131230756;
+			public const int btnAnterior = 2131230756;
 			
-			// aapt resource value: 0x7f080015
-			public const int btNao = 2131230741;
+			// aapt resource value: 0x7f08001b
+			public const int btnCancelarQuestionario = 2131230747;
 			
-			// aapt resource value: 0x7f080017
-			public const int btSim = 2131230743;
+			// aapt resource value: 0x7f080026
+			public const int btnConcluirQuestionario = 2131230758;
 			
-			// aapt resource value: 0x7f080025
-			public const int btnAnterior = 2131230757;
+			// aapt resource value: 0x7f080018
+			public const int btnDir = 2131230744;
 			
-			// aapt resource value: 0x7f08001c
-			public const int btnCancelarQuestionario = 2131230748;
-			
-			// aapt resource value: 0x7f080027
-			public const int btnConcluirQuestionario = 2131230759;
+			// aapt resource value: 0x7f080016
+			public const int btnEsq = 2131230742;
 			
 			// aapt resource value: 0x7f080008
 			public const int btnLogin = 2131230728;
@@ -138,14 +138,14 @@ namespace AppSaudeFamilia
 			// aapt resource value: 0x7f080009
 			public const int btnNovaColeta = 2131230729;
 			
-			// aapt resource value: 0x7f08001b
-			public const int btnOK = 2131230747;
+			// aapt resource value: 0x7f08001a
+			public const int btnOK = 2131230746;
 			
 			// aapt resource value: 0x7f080013
 			public const int btnOKModal1Opcao1Msg = 2131230739;
 			
-			// aapt resource value: 0x7f080026
-			public const int btnProximo = 2131230758;
+			// aapt resource value: 0x7f080025
+			public const int btnProximo = 2131230757;
 			
 			// aapt resource value: 0x7f08000b
 			public const int btnSair = 2131230731;
@@ -171,23 +171,23 @@ namespace AppSaudeFamilia
 			// aapt resource value: 0x7f08000f
 			public const int linearSairSistema = 2131230735;
 			
-			// aapt resource value: 0x7f080028
-			public const int menuLateral = 2131230760;
-			
-			// aapt resource value: 0x7f08001f
-			public const int rbOpcao1 = 2131230751;
-			
-			// aapt resource value: 0x7f080020
-			public const int rbOpcao2 = 2131230752;
-			
-			// aapt resource value: 0x7f080021
-			public const int rbOpcao3 = 2131230753;
-			
-			// aapt resource value: 0x7f080022
-			public const int rbOpcao4 = 2131230754;
+			// aapt resource value: 0x7f080027
+			public const int menuLateral = 2131230759;
 			
 			// aapt resource value: 0x7f08001e
-			public const int rdOpcoes = 2131230750;
+			public const int rbOpcao1 = 2131230750;
+			
+			// aapt resource value: 0x7f08001f
+			public const int rbOpcao2 = 2131230751;
+			
+			// aapt resource value: 0x7f080020
+			public const int rbOpcao3 = 2131230752;
+			
+			// aapt resource value: 0x7f080021
+			public const int rbOpcao4 = 2131230753;
+			
+			// aapt resource value: 0x7f08001d
+			public const int rdOpcoes = 2131230749;
 			
 			// aapt resource value: 0x7f08000e
 			public const int rightListView = 2131230734;
@@ -201,14 +201,14 @@ namespace AppSaudeFamilia
 			// aapt resource value: 0x7f080004
 			public const int scrollView1 = 2131230724;
 			
+			// aapt resource value: 0x7f080015
+			public const int txtInfo = 2131230741;
+			
 			// aapt resource value: 0x7f080019
-			public const int txtInfo = 2131230745;
+			public const int txtInfo2 = 2131230745;
 			
-			// aapt resource value: 0x7f08001a
-			public const int txtInfo2 = 2131230746;
-			
-			// aapt resource value: 0x7f080018
-			public const int txtInfoTitulo = 2131230744;
+			// aapt resource value: 0x7f080014
+			public const int txtInfoTitulo = 2131230740;
 			
 			// aapt resource value: 0x7f080002
 			public const int txtItemMenu = 2131230722;
@@ -216,17 +216,14 @@ namespace AppSaudeFamilia
 			// aapt resource value: 0x7f080007
 			public const int txtPassword = 2131230727;
 			
-			// aapt resource value: 0x7f08001d
-			public const int txtPergunta = 2131230749;
+			// aapt resource value: 0x7f08001c
+			public const int txtPergunta = 2131230748;
 			
-			// aapt resource value: 0x7f080023
-			public const int txtResposta = 2131230755;
+			// aapt resource value: 0x7f080022
+			public const int txtResposta = 2131230754;
 			
 			// aapt resource value: 0x7f080011
 			public const int txtTituloModal1Msg1Opcao = 2131230737;
-			
-			// aapt resource value: 0x7f080014
-			public const int txtTituloSair = 2131230740;
 			
 			// aapt resource value: 0x7f080006
 			public const int txtUsuario = 2131230726;
@@ -234,8 +231,8 @@ namespace AppSaudeFamilia
 			// aapt resource value: 0x7f080003
 			public const int view1 = 2131230723;
 			
-			// aapt resource value: 0x7f080016
-			public const int view2 = 2131230742;
+			// aapt resource value: 0x7f080017
+			public const int view2 = 2131230743;
 			
 			static Id()
 			{

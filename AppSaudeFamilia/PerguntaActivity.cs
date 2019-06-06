@@ -1,9 +1,14 @@
 using Android.App;
+using Android.Content;
+using Android.Content.PM;
 using Android.Locations;
 using Android.OS;
+using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using AppSaudeFamilia.DataLocal;
 using AppSaudeFamilia.Servico;
+using AppSaudeFamilia.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +16,17 @@ using System.Threading.Tasks;
 
 namespace AppSaudeFamilia
 {
-    [Activity(Label = "Saúde Família")]
-    public class PerguntaActivity : Activity
+    [Activity(Label = "Saúde Família", ScreenOrientation = ScreenOrientation.Portrait)]
+    public class PerguntaActivity : Activity, ILocationListener
     {
+        public LocationManager locMgr { get; set; }
 
         public int QuestaoAtual { get; set; }
+
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+
+        public bool GPSLigado { get; set; }
 
         public List<ListaPerguntasSaidaDTO> Perguntas { get; set; }
 
@@ -27,9 +38,13 @@ namespace AppSaudeFamilia
 
             SetContentView(Resource.Layout.Pergunta);
 
+            locMgr = (LocationManager)GetSystemService(LocationService);
+
+            IsLocationEnabled();
             CarregaElementosTela();
 
             PreencherPergunta(Perguntas[QuestaoAtual]);
+
         }
 
         #region ElementosTela
@@ -72,7 +87,7 @@ namespace AppSaudeFamilia
             rbOpcao4.Click += RbAlternativa_Click;
             btnEnviarColeta.Click += BtnEnviarColeta_Click;
             btnCancelar.Click += BtnCancelar_Click;
-            txtResposta.AfterTextChanged += TxtResposta_AfterTextChanged;  
+            txtResposta.AfterTextChanged += TxtResposta_AfterTextChanged;
         }
 
         #endregion
@@ -85,13 +100,29 @@ namespace AppSaudeFamilia
 
         private void BtnEnviarColeta_Click(object sender, EventArgs e)
         {
-            if(Perguntas.Where(p => p.IdAlternativa == 0 && String.IsNullOrEmpty(p.Resposta)).Count() > 0)
+            if (Perguntas.Where(p => p.IdAlternativa == 0 && String.IsNullOrEmpty(p.Resposta)).Count() > 0)
             {
                 Modal.ExibirModal(this, "Pergunta não preenchida", "", "Nem todas as perguntas foram respondidas. Gentileza verificar.");
             }
             else
             {
+                ProgressDialog loading = null;
+                RunOnUiThread(() =>
+                {
+                    loading = ProgressDialog.Show(this, "Salvando dados localmente", "Isso pode demorar um pouco.\nFavor aguardar!", true);
+                });
+
                 InserirBancoLocal();
+
+                if (loading.IsShowing && loading != null)
+                {
+                    loading.Dismiss();
+                }
+
+                Finish();
+
+                var activity = new Intent(this, typeof(TelaInicialActivity));
+                StartActivity(activity);
             }
         }
 
@@ -191,7 +222,7 @@ namespace AppSaudeFamilia
                 return elementPos;
             }
 
-            return null;           
+            return null;
         }
 
         private void PreencherAlternativas(List<Alternativa> alternativa, int idAlternativa)
@@ -249,7 +280,7 @@ namespace AppSaudeFamilia
                 btnProximo.Visibility = ViewStates.Visible;
             }
 
-           
+
         }
 
         private void VerificarResposta()
@@ -268,7 +299,142 @@ namespace AppSaudeFamilia
 
         private void InserirBancoLocal()
         {
+            var stringBuilder = new System.Text.StringBuilder();
+
+            foreach (var item in Perguntas)
+            {
+                var questionario = new QuestionarioDB()
+                {
+                    Data = DateTime.Now.ToString(),
+                    IdPergunta = item.Id,
+                    IdQuestionario = 1,
+                    IdResposta = item.IdAlternativa,
+                    Resposta = item.Resposta,
+                    Longitude = Longitude.ToString(),
+                    Latitude = Latitude.ToString()
+                };
+
+                stringBuilder.AppendFormat("{0};", questionario.InsertQuery);
+            }
+
+            UtilDataBase.Save(stringBuilder.ToString());
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            if (locMgr == null)
+            {
+                locMgr = (LocationManager)GetSystemService(LocationService);
+            }
+        }
+
+        protected override void OnActivityResult(int requestCode, [GeneratedEnum]Result resultCode, Intent data)
+        {
+            if (requestCode == 3)
+                IsLocationEnabled();
+        }
+
+        #region GPS
+
+        protected void IsLocationEnabled()
+        {
+            try
+            {
+                locMgr.RequestLocationUpdates(LocationManager.GpsProvider, 1000, 10, this);
+                locMgr.RequestLocationUpdates(LocationManager.NetworkProvider, 0, 0, this);
+            }
+            catch (Exception)
+            {
+                ExibirModalLocalizacao("Permite o acesso a sua localização?", "Sua Localização é usada para verificar onde foi realizado a pesquisa.", "Não permitir", "Permitir");
+            }
+        }
+
+        public void OnLocationChanged(Android.Locations.Location location)
+        {
+            Latitude = location.Latitude;
+            Longitude = location.Longitude;
+        }
+
+        public void OnProviderDisabled(string provider)
+        {
+            GPSLigado = false;
+        }
+
+        public void OnProviderEnabled(string provider)
+        {
+            GPSLigado = true;
+        }
+
+        public void OnStatusChanged(string provider, Availability status, Bundle extras)
+        {
 
         }
+
+        public override void OnBackPressed()
+        {
+            DesligaListenerGps();
+            Finish();
+        }
+
+        private void DesligaListenerGps()
+        {
+            locMgr.RemoveUpdates(this);
+            locMgr = null;
+        }
+
+        #endregion
+
+        #region Modal GPS
+
+        public Dialog dialog { get; set; }
+
+        public void ExibirModalLocalizacao(string titulo, string info, string opcaoEsq, string opcaoDir)
+        {
+            RunOnUiThread(() =>
+            {
+                dialog = new Dialog(this, Resource.Style.modal_theme);
+                dialog.SetContentView(Resource.Layout.Modal2Opcoes1Msg);
+
+                TextView txtInfoTitulo = (TextView)dialog.FindViewById(Resource.Id.txtInfoTitulo);
+                TextView txtInfo = (TextView)dialog.FindViewById(Resource.Id.txtInfo);
+                Button esq = (Button)dialog.FindViewById(Resource.Id.btnEsq);
+                Button dir = (Button)dialog.FindViewById(Resource.Id.btnDir);
+
+                txtInfoTitulo.Text = titulo;
+                txtInfo.Text = info;
+                esq.Text = opcaoEsq;
+                dir.Text = opcaoDir;
+
+                if (string.IsNullOrEmpty(info))
+                {
+                    txtInfo.Visibility = ViewStates.Invisible;
+                }
+                else
+                {
+                    txtInfo.Text = info;
+                }
+
+                esq.Click += Esq_Click;
+                dir.Click += Dir_Click;
+
+                dialog.Show();
+            });
+        }
+
+        private void Dir_Click(object sender, EventArgs e)
+        {
+            dialog.Dismiss();
+            var intent = new Intent(Android.Provider.Settings.ActionLocationSourceSettings);
+            StartActivityForResult(intent, 3);
+        }
+
+        private void Esq_Click(object sender, EventArgs e)
+        {
+            dialog.Dismiss();
+        }
+
+        #endregion
+
     }
 }

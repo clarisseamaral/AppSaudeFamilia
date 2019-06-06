@@ -3,7 +3,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:gravity="center"
+    android:minWidth="25px"
+    android:minHeight="25px">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -14,18 +16,28 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp">
         <TextView
-            android:id="@+id/txtTituloSair"
+            android:id="@+id/txtInfoTitulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:text="Titulo"
             android:textSize="20dp"
+            android:textStyle="bold"
             android:gravity="center"
-            android:paddingTop="25dp"
+            android:background="@drawable/backgroundmodaltopo"
+            android:paddingTop="25dp" />
+        <TextView
+            android:id="@+id/txtInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:paddingTop="5dp"
+            android:text="Mensagem"
+            android:textSize="17dp"
+            android:textAlignment="center"
+            android:gravity="center"
             android:paddingBottom="25dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:background="@drawable/BackgroundModalTopo" />
+            android:background="#E2E6E5" />
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -39,11 +51,11 @@
             android:id="@+id/linearLayout2"
             android:background="@android:color/transparent">
             <Button
+                android:text="Não Permitir"
+                android:id="@+id/btnEsq"
                 android:background="@drawable/EfeitoPressionadoModalOpcaoEsq"
-                android:text="Não"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/btNao"
                 android:textSize="17dp"
                 android:textColor="@android:color/holo_blue_dark"
                 android:gravity="center"
@@ -56,10 +68,10 @@
                 android:background="@android:color/darker_gray"
                 android:id="@+id/view2" />
             <Button
-                android:text="Sim"
+                android:text="Permitir"
+                android:id="@+id/btnDir"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/btSim"
                 android:textSize="17dp"
                 android:textColor="@android:color/holo_blue_dark"
                 android:gravity="center"

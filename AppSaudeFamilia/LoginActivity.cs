@@ -1,5 +1,6 @@
 using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.OS;
 using Android.Views;
 using Android.Views.InputMethods;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace AppSaudeFamilia
 {
-    [Activity(Label = "Saúde Família", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "Saúde Família", MainLauncher = true, Icon = "@drawable/icon", ScreenOrientation = ScreenOrientation.Portrait)]
     public class LoginActivity : Activity
     {
         protected override async void OnCreate(Bundle savedInstanceState)
@@ -44,7 +45,6 @@ namespace AppSaudeFamilia
             else
             {
                 SetContentView(Resource.Layout.Login);
-
                 FindViewById<Button>(Resource.Id.btnLogin).Click += BtnLogin_Click;
             }
            

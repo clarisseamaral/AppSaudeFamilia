@@ -162,15 +162,13 @@
     <AndroidResource Include="Resources\drawable\cancelar.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\Modal2Opcoes1Msg.axml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\EfeitoPressionadoModalOpcaoEsq.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\EfeitoPressionadoModalOpcaoDir.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Modal2Opcoes1Msg.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Mono.Data.Sqlite.Portable.1.0.3.5\tools\Mono.Data.Sqlite.Portable.targets" Condition="Exists('..\packages\Mono.Data.Sqlite.Portable.1.0.3.5\tools\Mono.Data.Sqlite.Portable.targets')" />

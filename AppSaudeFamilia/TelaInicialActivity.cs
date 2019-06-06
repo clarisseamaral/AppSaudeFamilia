@@ -1,17 +1,16 @@
 ﻿using System;
 using Android.App;
 using Android.Content;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
 using AppSaudeFamilia.Util;
 using AppSaudeFamilia.DataLocal;
-using System.Threading.Tasks;
+using Android.Content.PM;
 
 namespace AppSaudeFamilia
 {
-    [Activity(Label = "Saúde Família")]
+    [Activity(Label = "Saúde Família", ScreenOrientation = ScreenOrientation.Portrait)]
     public class TelaInicialActivity : Activity
     {
 
@@ -41,16 +40,25 @@ namespace AppSaudeFamilia
         {
             var dialog = new Dialog(this, Resource.Style.modal_theme);
             dialog.SetContentView(Resource.Layout.Modal2Opcoes1Msg);
-            TextView txtTitulo = dialog.FindViewById<TextView>(Resource.Id.txtTituloSair);
-            txtTitulo.Text = "Tem certeza que deseja realmente sair? Questionários não sincronizados serão perdidos.";
+            TextView txtTitulo = dialog.FindViewById<TextView>(Resource.Id.txtInfoTitulo);
+            txtTitulo.Text = "Tem certeza que deseja realmente sair?";
 
-            Button btNao = dialog.FindViewById<Button>(Resource.Id.btNao);
+            TextView txtInfo = (TextView)dialog.FindViewById(Resource.Id.txtInfo);
+            txtInfo.Text = "Questionários não sincronizados serão perdidos.";
+
+            Button btNao = dialog.FindViewById<Button>(Resource.Id.btnDir);
+
+            btNao.Text = "Não";
+
             btNao.Click += delegate
             {
                 dialog.Dismiss();
             };
 
-            Button btSim = dialog.FindViewById<Button>(Resource.Id.btSim);
+            Button btSim = dialog.FindViewById<Button>(Resource.Id.btnEsq);
+
+            btSim.Text = "Sim";
+
             btSim.Click += delegate
             {
                 Intent intent = new Intent(this, typeof(LoginActivity));
@@ -61,14 +69,17 @@ namespace AppSaudeFamilia
             dialog.Show();
         }
 
-        //protected override void OnResume()
-        //{
-        //    var dtQuestionario = UtilDataBase.CountItem(QuestionarioDB.TableName);
-        //    if (dtQuestionario > 0)
-        //    {
-        //        FindViewById<Button>(Resource.Id.btnSincronizarColeta).Visibility = ViewStates.Visible;
-        //    }
-        //}
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            var dtQuestionario = UtilDataBase.CountItem(QuestionarioDB.TableName);
+            if (dtQuestionario > 0)
+            {
+                FindViewById<Button>(Resource.Id.btnSincronizarColeta).Visibility = ViewStates.Visible;
+            }
+        }
+
     }
 }
 
