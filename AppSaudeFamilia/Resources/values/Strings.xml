@@ -7,4 +7,6 @@
     <string name="LoadingMensagem">Aguarde...</string>
     <string name="AutenticacaoInvalidaTitulo"></string>
     <string name="AutenticacaoInvalidaMensagem">Verifique se os campos foram preenchidos corretamente.</string>
+    <string name="ConexaoInternetTitulo">Sem conexão com internet</string>
+    <string name="ConexaoInternetMensagem">Verifique sua conexão com a internet e tente acessar novamente</string>
 </resources>

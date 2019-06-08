@@ -46,33 +46,30 @@ namespace AppSaudeFamilia.Servico
             return retorno;
         }
 
-        public static async Task<U> PostAsyncSemEntrada<U>(string caminho)
+        public static async Task<bool> PostSemSaida<T>(T entrada, string caminho, string token)
         {
-            var retorno = Activator.CreateInstance<U>();
+            var retorno = Activator.CreateInstance<bool>();
             var client = new HttpClient();
 
             try
             {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 client.BaseAddress = new Uri(EnderecoBase);
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                HttpContent contentPost = new StringContent("", Encoding.UTF8, "application/json");
+                var param = Newtonsoft.Json.JsonConvert.SerializeObject(entrada);
+                HttpContent contentPost = new StringContent(param, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await client.PostAsync(caminho, contentPost);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    var resposta = await response.Content.ReadAsStringAsync();
-                    retorno = JsonConvert.DeserializeObject<U>(resposta);
-                }
-                else
-                {
-                }
+                return response.IsSuccessStatusCode;
+
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
 
-            return retorno;
+             return false;
         }
 
         public static async Task<U> PostAsync<U>(string caminho)

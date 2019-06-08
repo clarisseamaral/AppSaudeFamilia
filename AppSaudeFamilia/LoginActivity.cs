@@ -58,29 +58,36 @@ namespace AppSaudeFamilia
 
             await Task.Run(async () =>
             {
-                if (!string.IsNullOrEmpty(txtUsuario.Text) && !string.IsNullOrEmpty(txtSenha.Text))
+
+                if (UtilAcessibilidade.VerificaAcessoInternet(this))
                 {
-                    ProgressDialog loading = null;
-
-                    RunOnUiThread(() =>
+                    if (!string.IsNullOrEmpty(txtUsuario.Text) && !string.IsNullOrEmpty(txtSenha.Text))
                     {
-                        loading = ProgressDialog.Show(this, "Entrando", "Isso pode demorar um pouco.\nFavor aguardar!", true);
-                    });
+                        ProgressDialog loading = null;
 
-                    var entrada = new AutenticacaoEntradaDTO() { Usuario = txtUsuario.Text.Trim(), Senha = txtSenha.Text };
-                    var saida = await WebService.PostAsync<AutenticacaoEntradaDTO, AutenticacaoSaidaDTO>(entrada, CaminhoWebService.AUTENTICACAO);
+                        RunOnUiThread(() =>
+                        {
+                            loading = ProgressDialog.Show(this, "Entrando", "Isso pode demorar um pouco.\nFavor aguardar!", true);
+                        });
 
-                    if (loading.IsShowing && loading != null)
-                    {
-                        loading.Dismiss();
+                        var entrada = new AutenticacaoEntradaDTO() { Usuario = txtUsuario.Text.Trim(), Senha = txtSenha.Text };
+                        var saida = await WebService.PostAsync<AutenticacaoEntradaDTO, AutenticacaoSaidaDTO>(entrada, CaminhoWebService.AUTENTICACAO);
+
+                        if (loading.IsShowing && loading != null)
+                        {
+                            loading.Dismiss();
+                        }
+
+                        VerificaLogin(saida.Token);
                     }
-
-                    VerificaLogin(saida.Token);
+                    else
+                    {
+                        Modal.ExibirModal(this, "Email ou senha em branco", "", "Gentileza informar os campos E-mail e Senha");
+                    }
                 }
                 else
-                {
-                    Modal.ExibirModal(this, "Email ou senha em branco", "", "Gentileza informar os campos E-mail e Senha");
-                }
+                    Modal.ExibirModal(this, GetString(Resource.String.ConexaoInternetTitulo), "", GetString(Resource.String.ConexaoInternetMensagem));
+
             });
 
             //Esconder o teclado antes de passar para próxima Activity

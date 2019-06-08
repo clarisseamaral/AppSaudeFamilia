@@ -34,16 +34,30 @@ namespace AppSaudeFamilia
         {
             base.OnCreate(savedInstanceState);
 
-            Perguntas = await BuscarPerguntas();
+            await Task.Run(async () =>
+            {
 
-            SetContentView(Resource.Layout.Pergunta);
+                if (UtilAcessibilidade.VerificaAcessoInternet(this))
+                {
+                    Perguntas = await BuscarPerguntas();
 
-            locMgr = (LocationManager)GetSystemService(LocationService);
+                    SetContentView(Resource.Layout.Pergunta);
 
-            IsLocationEnabled();
-            CarregaElementosTela();
+                    locMgr = (LocationManager)GetSystemService(LocationService);
 
-            PreencherPergunta(Perguntas[QuestaoAtual]);
+                    IsLocationEnabled();
+                    CarregaElementosTela();
+
+                    PreencherPergunta(Perguntas[QuestaoAtual]);
+
+                }
+                else
+                {
+                    Modal.ExibirModal(this, GetString(Resource.String.ConexaoInternetTitulo), "", GetString(Resource.String.ConexaoInternetMensagem));
+                }
+            });
+
+
 
         }
 
@@ -299,25 +313,36 @@ namespace AppSaudeFamilia
 
         private void InserirBancoLocal()
         {
-            var stringBuilder = new System.Text.StringBuilder();
-
-            foreach (var item in Perguntas)
+            if (Latitude == 0 && Longitude == 0)
             {
-                var questionario = new QuestionarioDB()
-                {
-                    Data = DateTime.Now.ToString(),
-                    IdPergunta = item.Id,
-                    IdQuestionario = 1,
-                    IdResposta = item.IdAlternativa,
-                    Resposta = item.Resposta,
-                    Longitude = Longitude.ToString(),
-                    Latitude = Latitude.ToString()
-                };
+                Modal.ExibirModal(this, "GPS", "", "Não foi possível identificar sua localização. Verifique se o GPS está ligado e tente novamente.");
+            }
+            else
+            {
+                var stringBuilder = new System.Text.StringBuilder();
 
-                stringBuilder.AppendFormat("{0};", questionario.InsertQuery);
+                var guid = Guid.NewGuid();
+
+                foreach (var item in Perguntas)
+                {
+                    var questionario = new QuestionarioDB()
+                    {
+                        Guid = guid.ToString(),
+                        Data = DateTime.Now.ToString(),
+                        IdPergunta = item.Id,
+                        IdQuestionario = 1,
+                        IdResposta = item.IdAlternativa,
+                        Resposta = item.Resposta,
+                        Longitude = Longitude.ToString(),
+                        Latitude = Latitude.ToString()
+                    };
+
+                    stringBuilder.AppendFormat("{0};", questionario.InsertQuery);
+                }
+
+                UtilDataBase.Save(stringBuilder.ToString());
             }
 
-            UtilDataBase.Save(stringBuilder.ToString());
         }
 
         protected override void OnResume()
@@ -332,7 +357,9 @@ namespace AppSaudeFamilia
         protected override void OnActivityResult(int requestCode, [GeneratedEnum]Result resultCode, Intent data)
         {
             if (requestCode == 3)
+            {
                 IsLocationEnabled();
+            }
         }
 
         #region GPS

@@ -78,7 +78,7 @@ namespace AppSaudeFamilia
 			public const int EfeitoPressionadoModalOpcaoDir = 2130837506;
 			
 			// aapt resource value: 0x7f020003
-			public const int EfeitoPressionadoModalOpcaoEsq = 2130837507;
+			public const int Efeitopressionadomodalopcaoesq = 2130837507;
 			
 			// aapt resource value: 0x7f020004
 			public const int EfeitoPressionadoModalOpcaoUnica = 2130837508;
@@ -308,6 +308,12 @@ namespace AppSaudeFamilia
 			
 			// aapt resource value: 0x7f040006
 			public const int AutenticacaoInvalidaTitulo = 2130968582;
+			
+			// aapt resource value: 0x7f040009
+			public const int ConexaoInternetMensagem = 2130968585;
+			
+			// aapt resource value: 0x7f040008
+			public const int ConexaoInternetTitulo = 2130968584;
 			
 			// aapt resource value: 0x7f040000
 			public const int Hello = 2130968576;

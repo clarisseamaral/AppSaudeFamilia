@@ -6,5 +6,7 @@
 
         public const string AUTENTICACAO = "api/autenticacao";
 
+        public const string RESPOSTAS = "api/questionarios/1/respostas";
+
     }
 }

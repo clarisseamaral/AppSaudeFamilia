@@ -14,6 +14,8 @@ namespace AppSaudeFamilia.DataLocal
         public string Latitude { get; set; }
         public string Longitude { get; set; }
 
+        public string Guid { get; set; }
+
         public QuestionarioDB(DataRow dr)
         {
             ConvertDr(dr);
@@ -23,7 +25,8 @@ namespace AppSaudeFamilia.DataLocal
 
         public static string TableColumns {
             get {
-                return @"IdQuestionario INTEGER, 
+                return @"Guid ntext, 
+                         IdQuestionario INTEGER, 
                          IdPergunta INTEGER, 
                          IdResposta INTEGER, 
                          Resposta ntext, 
@@ -41,9 +44,10 @@ namespace AppSaudeFamilia.DataLocal
         public string InsertQuery {
             get {
                 var sb = new StringBuilder();
-                sb.AppendFormat("insert into {0} (IdQuestionario, IdPergunta, IdResposta, Resposta, Data, Longitude, Latitude)", TableName);
+                sb.AppendFormat("insert into {0} (Guid, IdQuestionario, IdPergunta, IdResposta, Resposta, Data, Longitude, Latitude)", TableName);
 
                 sb.Append(" values(");
+                sb.AppendFormat("'{0}',", this.Guid);
                 sb.AppendFormat("'{0}',", this.IdQuestionario);
                 sb.AppendFormat("'{0}',", this.IdPergunta);
                 sb.AppendFormat("'{0}',", this.IdResposta);
@@ -83,6 +87,7 @@ namespace AppSaudeFamilia.DataLocal
             Data = dr["Data"].ToString();
             Longitude = dr["Longitude"].ToString();
             Latitude = dr["Latitude"].ToString();
+            Guid = dr["Guid"].ToString();
         }
     }
 }

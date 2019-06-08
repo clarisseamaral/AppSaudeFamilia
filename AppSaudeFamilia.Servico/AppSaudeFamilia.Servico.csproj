@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="CaminhoWebService.cs" />
     <Compile Include="Entrada\AutenticacaoEntradaDTO.cs" />
+    <Compile Include="Entrada\ColetaEntradaDTO.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Saida\AutenticacaoSaidaDTO.cs" />

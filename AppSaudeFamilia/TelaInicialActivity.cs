@@ -1,12 +1,16 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
+using Android.Content.PM;
+using Android.OS;
 using Android.Views;
 using Android.Widget;
-using Android.OS;
-using AppSaudeFamilia.Util;
 using AppSaudeFamilia.DataLocal;
-using Android.Content.PM;
+using AppSaudeFamilia.Servico;
+using AppSaudeFamilia.Util;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Threading.Tasks;
 
 namespace AppSaudeFamilia
 {
@@ -21,19 +25,23 @@ namespace AppSaudeFamilia
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
 
-            var dtQuestionario = UtilDataBase.CountItem(QuestionarioDB.TableName);
-            if(dtQuestionario > 0)
-            {
-                FindViewById<Button>(Resource.Id.btnSincronizarColeta).Visibility = ViewStates.Visible;
-            }
+            ValidarExibicaoSicronizarColeta();
 
-            (FindViewById<Button>(Resource.Id.btnNovaColeta)).Click += delegate {
+            (FindViewById<Button>(Resource.Id.btnNovaColeta)).Click += delegate
+            {
                 var activity = new Intent(this, typeof(PerguntaActivity));
                 StartActivity(activity);
             };
 
+            (FindViewById<Button>(Resource.Id.btnSincronizarColeta)).Click += TelaInicialActivity_Click;
+
             (FindViewById<Button>(Resource.Id.btnSair)).Click += SairSistema_Click;
-          
+
+        }
+
+        private void TelaInicialActivity_Click(object sender, EventArgs e)
+        {
+            EnviarRespostas();
         }
 
         private void SairSistema_Click(object sender, EventArgs e)
@@ -69,6 +77,90 @@ namespace AppSaudeFamilia
             dialog.Show();
         }
 
+        private async void EnviarRespostas()
+        {
+            await Task.Run(async () =>
+            {
+                if (UtilAcessibilidade.VerificaAcessoInternet(this))
+                {
+
+                    ProgressDialog loading = null;
+
+                    RunOnUiThread(() =>
+                    {
+                        loading = ProgressDialog.Show(this, "Enviando coletas realizadas", "Isso pode demorar um pouco.\nFavor aguardar!", true);
+                    });
+
+
+                    var respostasDB = UtilDataBase.GetItems(QuestionarioDB.TableName);
+
+                    var questionariosInseridos = new List<ColetaEntradaDTO>();
+
+
+                    var registro = new QuestionarioDB();
+
+
+                    var request = new ColetaEntradaDTO();
+
+                    string guid = string.Empty;
+                    var respostas = new List<RespostaDto>();
+
+                    foreach (DataRow item in respostasDB.Rows)
+                    {
+                        registro.ConvertDr(item);
+
+                        if (guid != registro.Guid)
+                        {
+                            if (respostas.Count > 0)
+                            {
+                                request.Respostas = respostas;
+                                await WebService.PostSemSaida<ColetaEntradaDTO>(request, CaminhoWebService.RESPOSTAS, Aplicacao.Token);
+                                respostas = new List<RespostaDto>();
+                            }
+
+                            request = new ColetaEntradaDTO()
+                            {
+                                Data = Convert.ToDateTime(registro.Data),
+                                Latitude = Convert.ToDouble(registro.Latitude),
+                                Longitude = Convert.ToDouble(registro.Longitude),
+                            };
+
+                        }
+
+                        respostas.Add(new RespostaDto()
+                        {
+                            IdOpcaoResposta = registro.IdResposta > 0 ? (int?)registro.IdResposta : null,
+                            IdPergunta = registro.IdPergunta,
+                            Valor = registro.Resposta
+                        });
+
+
+                        guid = registro.Guid;
+                    }
+
+                    if (respostas.Count > 0)
+                    {
+                        request.Respostas = respostas;
+                        await WebService.PostSemSaida<ColetaEntradaDTO>(request, CaminhoWebService.RESPOSTAS, Aplicacao.Token);
+                        respostas = new List<RespostaDto>();
+                    }
+
+                    UtilDataBase.Delete(QuestionarioDB.TableName);
+
+                    if (loading.IsShowing && loading != null)
+                    {
+                        loading.Dismiss();
+                    }
+
+                    Modal.ExibirModal(this, "Confirmação", string.Empty, "Coletas sincronizadas com sucesso!");
+
+                }
+                else
+                {
+                    Modal.ExibirModal(this, GetString(Resource.String.ConexaoInternetTitulo), "", GetString(Resource.String.ConexaoInternetMensagem));
+                }
+            });
+        }
 
         protected override void OnResume()
         {
@@ -80,6 +172,17 @@ namespace AppSaudeFamilia
             }
         }
 
+        private void ValidarExibicaoSicronizarColeta()
+        {
+            var dtQuestionario = UtilDataBase.CountItem(QuestionarioDB.TableName);
+            FindViewById<Button>(Resource.Id.btnSincronizarColeta).Visibility = dtQuestionario > 0 ? ViewStates.Visible : ViewStates.Invisible;
+        }
+
+        protected override void OnPostResume()
+        {
+            base.OnPostResume();
+            ValidarExibicaoSicronizarColeta();
+        }
     }
 }
 
