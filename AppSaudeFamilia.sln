@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.73
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppSaudeFamilia", "AppSaudeFamilia\AppSaudeFamilia.csproj", "{B9680E4E-9D2D-4BF0-A170-FC029DC626C6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppSaudeFamilia", "App\AppSaudeFamilia\AppSaudeFamilia.csproj", "{B9680E4E-9D2D-4BF0-A170-FC029DC626C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppSaudeFamilia.Servico", "AppSaudeFamilia.Servico\AppSaudeFamilia.Servico.csproj", "{6DCC91CF-6250-4BA0-8094-775BA0300EF8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppSaudeFamilia.Servico", "App\AppSaudeFamilia.Servico\AppSaudeFamilia.Servico.csproj", "{6DCC91CF-6250-4BA0-8094-775BA0300EF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
