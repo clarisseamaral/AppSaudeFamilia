@@ -189,6 +189,7 @@
     <Compile Include="ColetaApiClient\Models\RespostaDto.cs" />
     <Compile Include="ColetaApiClient\Models\TipoPerguntaDto.cs" />
     <Compile Include="ColetaApiClient\Models\TokenDto.cs" />
+    <Compile Include="ColetaApiClient\Models\UsuarioDto.cs" />
     <Compile Include="Controllers\Api\PerguntasController.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />

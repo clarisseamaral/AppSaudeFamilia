@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-//using System.Data.Entity;
-//using System.Data.Entity.Infrastructure;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web.Http;
 using ColetaApi.Data;
 using ColetaApi.Dtos;
 using ColetaApi.Helper;
-//using System.Web.Http.Description;
-//using Coleta.Models;
-//using Coleta.Models.Api;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

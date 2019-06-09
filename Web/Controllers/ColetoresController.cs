@@ -1,6 +1,13 @@
-﻿using Coleta.Models;
+﻿using Coleta.Integracao;
+using Coleta.Models;
+using Coleta.ViewsModel;
+using ColetaApi;
+using ColetaApi.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Coleta.Controllers
@@ -14,17 +21,21 @@ namespace Coleta.Controllers
             db = new Contexto();
         }
 
-        public ActionResult Index(string searchString)
+        public async Task<ActionResult> Index(string searchString)
         {
-            var coletas = from m in db.Coletores
-                          select m;
-
-            if (!String.IsNullOrEmpty(searchString))
+            using (var cliente = Api.CriaCliente())
             {
-                coletas = coletas.Where(s => s.nome.Contains(searchString));
-            }
+                var coletores = await cliente.GetUsuariosAsync();
 
-            return View(coletas);
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    coletores = coletores.Where(s => s.Nome.Contains(searchString)).ToList();
+                }
+
+                return View(coletores);
+
+            }
+           
         }
 
         public ActionResult Edit(int id)
