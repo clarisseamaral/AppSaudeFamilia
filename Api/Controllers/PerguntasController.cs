@@ -61,5 +61,43 @@ namespace ColetaApi.Controllers
                           orderby pergunta.Ordem
                           select pergunta).ToListAsync(p => new PerguntaDto(p));
         }
+
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeletePerguntaAsync(int id)
+        {
+            var pergunta = await db.Pergunta.FindAsync(id);
+
+            if (pergunta == null)
+                return NotFound();
+            else
+            {
+                foreach (var item in pergunta.OpcaoRespostaPergunta)
+                    db.OpcaoRespostaPergunta.Remove(item);
+
+                db.Pergunta.Remove(pergunta);
+                db.SaveChanges();
+                return NoContent();
+            }
+        }
+
+        [HttpPost]
+        [ProducesResponseType(204)]
+        public async Task<ActionResult> PostPerguntasAsync([FromBody] PerguntaDto dados)
+        {
+            var pergunta = new Pergunta
+            {
+                Descricao = dados.Descricao,
+                IdTipoPergunta = dados.IdTipoPergunta,
+                OpcaoRespostaPergunta = dados.Alternativas.Select( a=> new OpcaoRespostaPergunta() { Opcao = a.Texto } ).ToList(),
+            };
+
+            db.Pergunta.Add(pergunta);
+
+            await db.SaveChangesAsync();
+
+            return NoContent();
+        }
+
     }
 }

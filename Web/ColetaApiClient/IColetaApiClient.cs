@@ -59,6 +59,16 @@ namespace ColetaApi
         /// </param>
         Task<HttpOperationResponse<IList<PerguntaDto>>> GetPerguntasWithHttpMessagesAsync(bool? listaSimplificada = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <param name='dados'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse> PostPerguntasWithHttpMessagesAsync(PerguntaDto dados = default(PerguntaDto), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
         /// <param name='id'>
         /// </param>
         /// <param name='customHeaders'>
@@ -68,6 +78,16 @@ namespace ColetaApi
         /// The cancellation token.
         /// </param>
         Task<HttpOperationResponse<PerguntaDto>> GetPerguntaWithHttpMessagesAsync(int id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name='id'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse> DeletePerguntaWithHttpMessagesAsync(int id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -110,6 +130,14 @@ namespace ColetaApi
         /// The cancellation token.
         /// </param>
         Task<HttpOperationResponse> PostRespostasWithHttpMessagesAsync(int id, ColetaDto dados = default(ColetaDto), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<IList<TipoPerguntaDto>>> GetTipoPerguntaWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

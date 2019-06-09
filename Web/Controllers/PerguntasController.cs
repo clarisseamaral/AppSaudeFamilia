@@ -34,37 +34,52 @@ namespace Coleta.Controllers
             }
         }
 
-        public ActionResult Edit(int id)
-        {
-            var model = new CadastroPergunta();
-            model.Pergunta = db.Perguntas.Find(id);
-            model.TiposPergunta = db.TipoPerguntas.ToList();
-            model.OpcaoRespostaPergunta = db.OpcaoRespostaPerguntas.Where(o => o.idPergunta == id).ToList();
-            return View(model);
-        }
+        //public async Task<ActionResult> Edit(int id)
+        //{
+        //    var model = new CadastroPergunta();
 
-        public ActionResult Create()
+        //    using (var cliente = Api.CriaCliente())
+        //    {
+        //        var pergunta = await cliente.GetPerguntaAsync(id);
+        //        model.Pergunta = pergunta;
+        //        model.TiposPergunta = await cliente.GetTipoPerguntaAsync();
+
+        //        return View(pergunta);
+        //    }
+        //}
+
+        public async Task<ActionResult> Create()
         {
             var model = new CadastroPergunta();
-            model.Pergunta = new Pergunta();
-            model.TiposPergunta = db.TipoPerguntas.ToList();
+            model.Pergunta = new PerguntaDto();
+
+            using (var cliente = Api.CriaCliente())
+            {
+               model.TiposPergunta = await cliente.GetTipoPerguntaAsync();
+            }
+
             return View(model);
         }
 
         [HttpPost]
-        public JsonResult Create(Pergunta pergunta)
+        public async Task<JsonResult> Create(Pergunta pergunta)
         {
             //TODO: corrigir exceção quando algum dos campos obrigatórios não for preenchido
-
             if (ModelState.IsValid)
             {
-                pergunta.FlgAtivo = true;
-
                 if (pergunta.IdTipoPergunta == 1 && pergunta.OpcaoRespostaPerguntas.Count == 0)
                     return Json(false);
 
-                db.Perguntas.Add(pergunta);
-                db.SaveChanges();
+                using (var cliente = Api.CriaCliente())
+                {
+                    await cliente.PostPerguntasAsync(new PerguntaDto()
+                    {
+                        IdTipoPergunta = pergunta.IdTipoPergunta,
+                        TipoPergunta = "tipopergunta", 
+                        Alternativas = pergunta.OpcaoRespostaPerguntas.Select(a => new AlternativaDto() { Texto = a.opcao }).ToList(),
+                        Descricao = pergunta.Descricao
+                    });
+                }
                 return Json(true);
             }
 
@@ -72,61 +87,66 @@ namespace Coleta.Controllers
         }
 
 
-        [HttpPost]
-        public JsonResult Edit(Pergunta pergunta)
+        //[HttpPost]
+        //public JsonResult Edit(Pergunta pergunta)
+        //{
+        //    //TODO: corrigir exceção quando algum dos campos obrigatórios não for preenchido
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            if (pergunta.IdTipoPergunta == 1 && pergunta.OpcaoRespostaPerguntas.Count == 0)
+        //                return Json(false);
+
+        //            var perguntaAntiga = db.Perguntas.Find(pergunta.Id);
+
+        //            perguntaAntiga.FlgAtivo = pergunta.FlgAtivo;
+        //            perguntaAntiga.Descricao = pergunta.Descricao;
+        //            perguntaAntiga.IdTipoPergunta = pergunta.IdTipoPergunta;
+
+        //            //TODO: alterar opções resposta (não funciona quando remove na edição)
+        //            //Incluir validação: não permitir edição quando a pergunta tiver sido respondida
+        //            perguntaAntiga.OpcaoRespostaPerguntas = pergunta.OpcaoRespostaPerguntas;
+
+        //            TryUpdateModel(perguntaAntiga);
+
+        //            db.SaveChanges();
+
+        //            return Json(true);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            return Json(false);
+        //        }
+
+        //    }
+
+        //    return Json(false);
+        //}
+
+        public async Task<ActionResult> Delete(int id)
         {
-            //TODO: corrigir exceção quando algum dos campos obrigatórios não for preenchido
-
-            if (ModelState.IsValid)
+            using (var cliente = Api.CriaCliente())
             {
-                try
-                {
-                    if (pergunta.IdTipoPergunta == 1 && pergunta.OpcaoRespostaPerguntas.Count == 0)
-                        return Json(false);
-
-                    var perguntaAntiga = db.Perguntas.Find(pergunta.Id);
-
-                    perguntaAntiga.FlgAtivo = pergunta.FlgAtivo;
-                    perguntaAntiga.Descricao = pergunta.Descricao;
-                    perguntaAntiga.IdTipoPergunta = pergunta.IdTipoPergunta;
-
-                    //TODO: alterar opções resposta (não funciona quando remove na edição)
-                    //Incluir validação: não permitir edição quando a pergunta tiver sido respondida
-                    perguntaAntiga.OpcaoRespostaPerguntas = pergunta.OpcaoRespostaPerguntas;
-
-                    TryUpdateModel(perguntaAntiga);
-
-                    db.SaveChanges();
-
-                    return Json(true);
-                }
-                catch (Exception ex)
-                {
-                    return Json(false);
-                }
-
+                await cliente.DeletePerguntaAsync(id);
             }
 
-            return Json(false);
-        }
-
-        public ActionResult Delete(int id)
-        {
-            var opcoes = db.OpcaoRespostaPerguntas.Where(o => o.idPergunta == id).ToList();
-
-            foreach (var item in opcoes)
-                db.OpcaoRespostaPerguntas.Remove(item);
-
-            var pergunta = db.Perguntas.Find(id);
-            db.Perguntas.Remove(pergunta);
-            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            var pergunta = db.Perguntas.Find(id);
-            return View(pergunta);
+            var model = new CadastroPergunta();
+
+            using (var cliente = Api.CriaCliente())
+            {
+                var pergunta = await cliente.GetPerguntaAsync(id);
+                model.Pergunta = pergunta;
+                model.TiposPergunta = await cliente.GetTipoPerguntaAsync();
+                model.OpcaoRespostaPergunta = pergunta.Alternativas.Select(a => new OpcaoRespostaPergunta() { opcao = a.Texto }).ToList();
+                return View(model);
+            }
         }
     }
 }
