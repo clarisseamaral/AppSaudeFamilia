@@ -65,9 +65,19 @@
     <Reference Include="Microsoft.Data.OData, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Data.OData.5.6.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Rest.ClientRuntime.2.3.2\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.6.9.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.6.9\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Security" />
     <Reference Include="System.Spatial, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Spatial.5.6.0\lib\net40\System.Spatial.dll</HintPath>
@@ -90,9 +100,6 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http">
     </Reference>
@@ -171,6 +178,16 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="ColetaApiClient\ColetaApiClient.cs" />
+    <Compile Include="ColetaApiClient\ColetaApiClientExtensions.cs" />
+    <Compile Include="ColetaApiClient\IColetaApiClient.cs" />
+    <Compile Include="ColetaApiClient\Models\AlternativaDto.cs" />
+    <Compile Include="ColetaApiClient\Models\ColetaDto.cs" />
+    <Compile Include="ColetaApiClient\Models\LoginDto.cs" />
+    <Compile Include="ColetaApiClient\Models\PerguntaDto.cs" />
+    <Compile Include="ColetaApiClient\Models\QuestionarioDto.cs" />
+    <Compile Include="ColetaApiClient\Models\RespostaDto.cs" />
+    <Compile Include="ColetaApiClient\Models\TokenDto.cs" />
     <Compile Include="Controllers\Api\PerguntasController.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
@@ -203,6 +220,7 @@
     <Compile Include="Controllers\ColetasController.cs" />
     <Compile Include="Controllers\ColetoresController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PerguntasController.cs" />
     <Compile Include="Controllers\Api\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -216,6 +234,7 @@
     <Compile Include="Models\OpcaoRespostaPergunta.cs" />
     <Compile Include="Models\Pergunta.cs" />
     <Compile Include="Models\RespostaColeta.cs" />
+    <Compile Include="Models\Autenticacao.cs" />
     <Compile Include="Models\TipoPergunta.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -288,6 +307,7 @@
     <Content Include="Views\Coletores\Index.cshtml" />
     <Content Include="Views\Coletores\Create.cshtml" />
     <Content Include="Views\Coletores\Edit.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

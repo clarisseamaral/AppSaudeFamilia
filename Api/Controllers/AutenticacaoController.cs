@@ -40,7 +40,7 @@ namespace ColetaApi.Controllers
 
         [HttpPost("")]
         [AllowAnonymous]
-        public async Task<ActionResult> PostAutenticacaoAsync([FromBody] LoginDto login)
+        public async Task<ActionResult<TokenDto>> PostAutenticacaoAsync([FromBody] LoginDto login)
         {
             var usuario = await db.Usuario.FirstOrDefaultAsync(u => u.Login == login.Usuario);
 
@@ -64,7 +64,7 @@ namespace ColetaApi.Controllers
                     expires: DateTime.Now.AddMonths(2),
                     signingCredentials: creds);
 
-                    return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+                    return Ok(new TokenDto { Token = new JwtSecurityTokenHandler().WriteToken(token) });
                 }
             }
 

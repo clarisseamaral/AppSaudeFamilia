@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using ColetaApi.Data;
@@ -61,6 +62,7 @@ namespace ColetaApi
             //    options.AuthKey = "custom auth key";
             //});
 
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Coleta API", Version = "v1" });
@@ -75,6 +77,8 @@ namespace ColetaApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
