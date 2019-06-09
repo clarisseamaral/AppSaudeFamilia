@@ -1,4 +1,5 @@
-﻿using ColetaApi;
+﻿using Coleta.Integracao;
+using ColetaApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,18 +34,10 @@ namespace Coleta.Controllers
         {
             try
             {
-                var cred = new Microsoft.Rest.TokenCredentials("asd", "Bearer");
-
-                using (var client = new ColetaApiClient(new Uri("https://localhost:5001"), cred))
+                using (var client = Api.CriaCliente())
                 {
                     var token = client.PostAutenticacao(new ColetaApi.Models.LoginDto(login.Usuario, login.Senha));
-                    cred = new Microsoft.Rest.TokenCredentials(token.Token, "Bearer");
-                }
-
-                using (var client = new ColetaApiClient(new Uri("https://localhost:5001"), cred))
-                {
-                    var perguntas = client.GetPerguntas();
-
+                    Api.DefineToken(token.Token);
                 }
 
                 return RedirectToAction("Index");
