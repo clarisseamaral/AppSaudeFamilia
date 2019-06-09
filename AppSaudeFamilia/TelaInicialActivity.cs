@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.Content.PM;
+using Android.Graphics;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
@@ -24,8 +25,6 @@ namespace AppSaudeFamilia
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
-
-            ValidarExibicaoSicronizarColeta();
 
             (FindViewById<Button>(Resource.Id.btnNovaColeta)).Click += delegate
             {
@@ -152,7 +151,12 @@ namespace AppSaudeFamilia
                         loading.Dismiss();
                     }
 
-                    Modal.ExibirModal(this, "Confirmação", string.Empty, "Coletas sincronizadas com sucesso!");
+                    RunOnUiThread(() =>
+                    {
+                        Toast.MakeText(this, "Coletas sincronizadas com sucesso!", ToastLength.Long).Show();
+                        ValidarExibicaoSicronizarColeta();
+                    });
+
 
                 }
                 else
@@ -165,23 +169,22 @@ namespace AppSaudeFamilia
         protected override void OnResume()
         {
             base.OnResume();
-            var dtQuestionario = UtilDataBase.CountItem(QuestionarioDB.TableName);
-            if (dtQuestionario > 0)
-            {
-                FindViewById<Button>(Resource.Id.btnSincronizarColeta).Visibility = ViewStates.Visible;
-            }
+            ValidarExibicaoSicronizarColeta();
         }
 
         private void ValidarExibicaoSicronizarColeta()
         {
-            var dtQuestionario = UtilDataBase.CountItem(QuestionarioDB.TableName);
-            FindViewById<Button>(Resource.Id.btnSincronizarColeta).Visibility = dtQuestionario > 0 ? ViewStates.Visible : ViewStates.Invisible;
-        }
+            var btnSincronizarColeta = FindViewById<Button>(Resource.Id.btnSincronizarColeta);
 
-        protected override void OnPostResume()
-        {
-            base.OnPostResume();
-            ValidarExibicaoSicronizarColeta();
+            var dtQuestionario = UtilDataBase.CountItem(QuestionarioDB.TableName);
+            var drawable = dtQuestionario > 0 ? Resource.Drawable.sync : Resource.Drawable.sync_Desabilitado;
+            var color = dtQuestionario > 0 ?  Color.ParseColor("#757575") : Color.ParseColor("#ffe0e0e0");
+            var enable = dtQuestionario > 0 ? true : false;
+
+            btnSincronizarColeta.SetBackgroundResource(drawable);
+            btnSincronizarColeta.Clickable = enable;
+            btnSincronizarColeta.Enabled = enable;
+            FindViewById<TextView>(Resource.Id.txtSincronizar).SetTextColor(color);
         }
     }
 }

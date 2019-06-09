@@ -7,16 +7,6 @@
 	android:background="@color/fundo"
 	android:paddingRight="20dp"
 	android:paddingLeft="20dp">
-	<Button
-		android:layout_width="27.0dp"
-		android:layout_height="28.5dp"
-		android:id="@+id/btnCancelarQuestionario"
-		android:background="@drawable/cancelar"
-		android:layout_marginLeft="330dp"
-		android:layout_marginRight="0.0dp"
-		android:layout_marginTop="5dp"
-		android:backgroundTint="#ff4db6ac" 
-		 />
 	<TextView
 		android:id="@+id/txtPergunta"
 		android:layout_width="match_parent"
@@ -126,6 +116,15 @@
 		android:id="@+id/btnConcluirQuestionario"
 		android:background="@color/button"
 		android:layout_marginTop="70px"
+		android:textColor="@color/primaryText"
+		android:textSize="15dp" />
+	<Button
+		android:text="CANCELAR"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/btnCancelarQuestionario"
+		android:background="@color/button"
+		android:layout_marginTop="40px"
 		android:textColor="@color/primaryText"
 		android:textSize="15dp" />
 </LinearLayout>

@@ -34,29 +34,28 @@ namespace AppSaudeFamilia
         {
             base.OnCreate(savedInstanceState);
 
-            await Task.Run(async () =>
-            {
+            //await Task.Run(async () =>
+            //{
+            //
+            //    if (UtilAcessibilidade.VerificaAcessoInternet(this))
+            //    {
+            Perguntas = await BuscarPerguntas();
 
-                if (UtilAcessibilidade.VerificaAcessoInternet(this))
-                {
-                    Perguntas = await BuscarPerguntas();
+            SetContentView(Resource.Layout.Pergunta);
 
-                    SetContentView(Resource.Layout.Pergunta);
+            locMgr = (LocationManager)GetSystemService(LocationService);
 
-                    locMgr = (LocationManager)GetSystemService(LocationService);
+            IsLocationEnabled();
+            CarregaElementosTela();
 
-                    IsLocationEnabled();
-                    CarregaElementosTela();
+            PreencherPergunta(Perguntas[QuestaoAtual]);
 
-                    PreencherPergunta(Perguntas[QuestaoAtual]);
-
-                }
-                else
-                {
-                    Modal.ExibirModal(this, GetString(Resource.String.ConexaoInternetTitulo), "", GetString(Resource.String.ConexaoInternetMensagem));
-                }
-            });
-
+            //   }
+            //      else
+            //      {
+            //          Modal.ExibirModal(this, GetString(Resource.String.ConexaoInternetTitulo), "", GetString(Resource.String.ConexaoInternetMensagem));
+            //      }
+            //  });
 
 
         }
@@ -117,6 +116,9 @@ namespace AppSaudeFamilia
             if (Perguntas.Where(p => p.IdAlternativa == 0 && String.IsNullOrEmpty(p.Resposta)).Count() > 0)
             {
                 Modal.ExibirModal(this, "Pergunta não preenchida", "", "Nem todas as perguntas foram respondidas. Gentileza verificar.");
+            }else if (Latitude == 0 && Longitude == 0)
+            {
+                Modal.ExibirModal(this, "GPS", "", "Não foi possível identificar sua localização. Verifique se o GPS está ligado e tente novamente.");
             }
             else
             {
@@ -132,6 +134,8 @@ namespace AppSaudeFamilia
                 {
                     loading.Dismiss();
                 }
+
+                Toast.MakeText(this, "Dados salvos localmente com sucesso.", ToastLength.Long).Show();
 
                 Finish();
 
@@ -313,35 +317,30 @@ namespace AppSaudeFamilia
 
         private void InserirBancoLocal()
         {
-            if (Latitude == 0 && Longitude == 0)
-            {
-                Modal.ExibirModal(this, "GPS", "", "Não foi possível identificar sua localização. Verifique se o GPS está ligado e tente novamente.");
-            }
-            else
-            {
-                var stringBuilder = new System.Text.StringBuilder();
 
-                var guid = Guid.NewGuid();
+            var stringBuilder = new System.Text.StringBuilder();
 
-                foreach (var item in Perguntas)
+            var guid = Guid.NewGuid();
+
+            foreach (var item in Perguntas)
+            {
+                var questionario = new QuestionarioDB()
                 {
-                    var questionario = new QuestionarioDB()
-                    {
-                        Guid = guid.ToString(),
-                        Data = DateTime.Now.ToString(),
-                        IdPergunta = item.Id,
-                        IdQuestionario = 1,
-                        IdResposta = item.IdAlternativa,
-                        Resposta = item.Resposta,
-                        Longitude = Longitude.ToString(),
-                        Latitude = Latitude.ToString()
-                    };
+                    Guid = guid.ToString(),
+                    Data = DateTime.Now.ToString(),
+                    IdPergunta = item.Id,
+                    IdQuestionario = 1,
+                    IdResposta = item.IdAlternativa,
+                    Resposta = item.Resposta,
+                    Longitude = Longitude.ToString(),
+                    Latitude = Latitude.ToString()
+                };
 
-                    stringBuilder.AppendFormat("{0};", questionario.InsertQuery);
-                }
-
-                UtilDataBase.Save(stringBuilder.ToString());
+                stringBuilder.AppendFormat("{0};", questionario.InsertQuery);
             }
+
+            UtilDataBase.Save(stringBuilder.ToString());
+
 
         }
 

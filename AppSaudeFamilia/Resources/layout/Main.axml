@@ -1,24 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
 	android:background="@color/fundo">
-	<Button
-		android:id="@+id/btnNovaColeta"
+	<LinearLayout
+		android:layout_height="fill_parent"
+		android:layout_weight="1"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/btnNovaColeta" />
+		android:gravity="center_horizontal"
+		android:orientation="vertical"
+		android:id="@+id/btControleTreino">
+		<Button
+			android:layout_width="164.5dp"
+			android:layout_height="163.0dp"
+			android:id="@+id/btnNovaColeta"
+			android:backgroundTint="#ff4db6ac"
+			android:background="@drawable/plus" />
+		<TextView
+			android:text="NOVA COLETA"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:layout_marginTop="10dp"
+			android:textColor="@color/primaryText"
+			android:id="@+id/textView1" />
+		<Button
+			android:layout_width="104.5dp"
+			android:layout_height="110.0dp"
+			android:id="@+id/btnSincronizarColeta"
+			android:layout_marginTop="40.5dp" />
+		<TextView
+			android:text="SINCRONIZAR"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:layout_marginTop="10dp"
+			android:textColor="#ffe0e0e0"
+			android:id="@+id/txtSincronizar" />
+		
+	</LinearLayout>
 	<Button
-		android:id="@+id/btnSincronizarColeta"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/btnSincronizarColeta"
-		android:visibility="invisible" />
-	<Button
-		android:text="Sair"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:id="@+id/btnSair" />
+		android:backgroundTint="#ff4db6ac"
+		android:layout_width="33.5dp"
+		android:layout_height="35.5dp"
+		android:background="@drawable/sair"
+		android:id="@+id/btnSair"
+		android:layout_marginStart="20dp"
+		android:layout_marginBottom="20dp" />
 </LinearLayout>
