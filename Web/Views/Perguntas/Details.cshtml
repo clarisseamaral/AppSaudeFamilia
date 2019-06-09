@@ -1,0 +1,25 @@
+﻿@model Coleta.Models.Pergunta
+@{
+    ViewBag.Title = "Details";
+}
+<h2>Detalhes da pergunta</h2>
+
+<div class="container">
+    <br />
+    <dl class="dl-horizontal">
+        <dt>@Html.DisplayNameFor(model => model.Id)</dt>
+        <dd>@Html.DisplayFor(model => model.Id)</dd>
+        <dt>@Html.DisplayNameFor(model => model.Descricao)</dt>
+        <dd>@Html.DisplayFor(model => model.Descricao)</dd>
+        <dt>@Html.DisplayNameFor(model => model.TipoPergunta)</dt>
+        <dd>@Html.DisplayFor(model => model.TipoPergunta.descricao)</dd>
+
+        @*TODO: opcões caso pergunta múltipla escolha *@
+    </dl>
+
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-primary" })
+</div>
+
+
+

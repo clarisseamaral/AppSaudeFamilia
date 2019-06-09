@@ -1,0 +1,53 @@
+﻿@model Coleta.ViewsModel.CadastroPergunta
+
+@{
+    ViewBag.Title = "_OpcoesResposta";
+}
+
+<form>
+    @Html.Label("Opções de resposta", new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <p>
+            <input type="text" id="opcao" class="form-control">
+            <input type="button" class="btn btn-default add-row glyphicon glyphicon-plus" value="Incluir" />
+            <input type="button" class="btn btn-default delete-row glyphicon glyphicon-trash" value="Remover" />
+        </p>
+    </div>
+</form>
+<table id="tbOpcoesResposta">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.OpcaoRespostaPergunta != null)
+        {
+            foreach (var item in Model.OpcaoRespostaPergunta)
+            {
+                <tr><td><input type='checkbox' name='opcaoInserida'></td><td>@item.opcao</td></tr>
+            }
+        }
+    </tbody>
+</table>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".add-row").click(function () {
+            var name = $("#opcao").val();
+            if (name.trim() != "") {
+                var markup = "<tr><td><input type='checkbox' name='opcaoInserida'></td><td>" + name + "</td></tr>";
+                $("table tbody").append(markup);
+            }
+        });
+
+        $(".delete-row").click(function () {
+            $("table tbody").find('input[name="opcaoInserida"]').each(function () {
+                if ($(this).is(":checked")) {
+                    $(this).parents("tr").remove();
+                }
+            });
+        });
+    });
+</script>

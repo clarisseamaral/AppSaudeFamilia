@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Coleta.Models.Coleta>
+
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Coletas</h2>
+
+@*@using (Html.BeginForm())
+{
+    <p style="padding-top: 30px;">
+        Descrição: @Html.TextBox("SearchString")<br />
+    </p>
+    <p style="text-align:right">
+        <input type="submit" value="Pesquisar" class="btn btn-primary" />
+        @Html.ActionLink("Novo", "Create", "Perguntas", null, new { @class = "btn btn-primary" })
+    </p>
+}*@
+
+<table class="table">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.data)</th>
+        <th>@Html.DisplayNameFor(model => model.Coletor)</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.data)</td>
+            <td>@Html.DisplayFor(modelItem => item.Coletor.nome)</td>
+            <td>
+                @Html.ActionLink(" ", "Edit", "Coletas", new { id = item.id }, new { @class = "glyphicon glyphicon-file" })
+                @*@Html.ActionLink(" ", "Details", "Perguntas", new { id = item.Id }, new { @class = "glyphicon glyphicon-file" })*@
+            </td>
+        </tr>
+    }
+</table>

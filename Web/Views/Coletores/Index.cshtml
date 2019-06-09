@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Coleta.Models.Coletor>
+
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Coletores</h2>
+
+@using (Html.BeginForm())
+{
+    <p style="padding-top: 30px;">
+        Nome: @Html.TextBox("SearchString")<br />
+    </p>
+    <p style="text-align:right">
+        <input type="submit" value="Pesquisar" class="btn btn-primary" />
+        @Html.ActionLink("Novo", "Create", "Coletores", null, new { @class = "btn btn-primary" })
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.nome)</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.nome)</td>
+            <td>
+                @Html.ActionLink(" ", "Edit", "Coletores", new { id = item.id }, new { @class = "glyphicon glyphicon-pencil" })
+                @*@Html.ActionLink(" ", "Details", "Coletores", new { id = item.id }, new { @class = "glyphicon glyphicon-file" })*@
+                @if (item.Coletas.Count == 0)
+                {
+                    @Html.ActionLink(" ", "Delete", "Coletores", new { id = item.id }, new
+               {
+                   @class = "glyphicon glyphicon-trash",
+                   onclick = "return confirm('Tem certeza que deseja remover este coletor?');"
+               })
+                }
+
+            </td>
+        </tr>
+    }
+</table>

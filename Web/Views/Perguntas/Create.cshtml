@@ -1,0 +1,90 @@
+﻿@model Coleta.ViewsModel.CadastroPergunta
+
+@{
+    ViewBag.Title = "Create";
+}
+<h2>Cadastro </h2>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Pergunta.Descricao, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Pergunta.Descricao, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Pergunta.Descricao, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TiposPergunta, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10" style="padding-top:5px">
+                        @Html.DropDownListFor(model => model.Pergunta.IdTipoPergunta, Model.TiposPergunta.Select(o => new SelectListItem() { Value = o.id.ToString(), Text = o.descricao }), "Selecione", new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.TiposPergunta, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div id="divOpcoesResposta" style="visibility:hidden" class="form-group">
+                    @Html.Partial("_OpcoesResposta", Model)
+                </div>
+                <div class="form-group" style="text-align:center">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-primary" })
+                        @*<input type="submit" value="Salvar" class="btn btn-primary" />*@
+                        <input type="button" id="btnSalvar" value="Salvar" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+
+        }
+<div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#Pergunta_IdTipoPergunta').change(function () {
+            var selectedID = $(this).val();
+            if (selectedID == 1) {
+                document.getElementById("divOpcoesResposta").style.visibility = "visible";
+            } else {
+                document.getElementById("divOpcoesResposta").style.visibility = "hidden";
+            }
+        });
+
+
+        $("body").on("click", "#btnSalvar", function () {
+
+            var respostas = new Array();
+            $("#tbOpcoesResposta TBODY TR").each(function () {
+                var row = $(this);
+                var resposta = {};
+                resposta.opcao = row.find("TD").eq(1).html();
+                respostas.push(resposta);
+            });
+
+            var pergunta = {
+                opcaoRespostaPerguntas : respostas,
+                descricao: $('#Pergunta_Descricao').val(),
+                idTipoPergunta: $('#Pergunta_IdTipoPergunta').val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Create", "Perguntas")",
+                data: JSON.stringify({ pergunta: pergunta }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response) {
+                        alert("Salvo com sucesso!") 
+                        window.location = "Index"
+                    } else {
+                        alert("Verifique os campos preenchidos!");
+                    }
+                }
+            });
+        });
+    });
+
+
+    </script>
