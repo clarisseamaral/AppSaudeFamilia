@@ -1,8 +1,12 @@
-﻿using Coleta.Models;
+﻿using Coleta.Integracao;
+using Coleta.Models;
 using Coleta.ViewsModel;
+using ColetaApi;
+using ColetaApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -17,17 +21,17 @@ namespace Coleta.Controllers
             db = new Contexto();
         }
 
-        public ActionResult Index(string searchString)
+        public async Task<ActionResult> Index(string searchString)
         {
-            var perguntas = from m in db.Perguntas
-                            select m;
-
-            if (!String.IsNullOrEmpty(searchString))
+            using (var cliente = Api.CriaCliente())
             {
-                perguntas = perguntas.Where(s => s.Descricao.Contains(searchString));
-            }
+                IEnumerable<PerguntaDto> perguntas = await cliente.GetPerguntasAsync();
 
-            return View(perguntas);
+                if (!String.IsNullOrEmpty(searchString))
+                    perguntas = perguntas.Where(s => s.Descricao.Contains(searchString));
+
+                return View(perguntas);
+            }
         }
 
         public ActionResult Edit(int id)
@@ -35,7 +39,7 @@ namespace Coleta.Controllers
             var model = new CadastroPergunta();
             model.Pergunta = db.Perguntas.Find(id);
             model.TiposPergunta = db.TipoPerguntas.ToList();
-            model.OpcaoRespostaPergunta = db.OpcaoRespostaPerguntas.Where(o=> o.idPergunta == id).ToList();
+            model.OpcaoRespostaPergunta = db.OpcaoRespostaPerguntas.Where(o => o.idPergunta == id).ToList();
             return View(model);
         }
 
@@ -56,7 +60,7 @@ namespace Coleta.Controllers
             {
                 pergunta.FlgAtivo = true;
 
-                if(pergunta.IdTipoPergunta == 1 && pergunta.OpcaoRespostaPerguntas.Count == 0)
+                if (pergunta.IdTipoPergunta == 1 && pergunta.OpcaoRespostaPerguntas.Count == 0)
                     return Json(false);
 
                 db.Perguntas.Add(pergunta);
@@ -85,7 +89,7 @@ namespace Coleta.Controllers
                     perguntaAntiga.FlgAtivo = pergunta.FlgAtivo;
                     perguntaAntiga.Descricao = pergunta.Descricao;
                     perguntaAntiga.IdTipoPergunta = pergunta.IdTipoPergunta;
-                    
+
                     //TODO: alterar opções resposta (não funciona quando remove na edição)
                     //Incluir validação: não permitir edição quando a pergunta tiver sido respondida
                     perguntaAntiga.OpcaoRespostaPerguntas = pergunta.OpcaoRespostaPerguntas;
