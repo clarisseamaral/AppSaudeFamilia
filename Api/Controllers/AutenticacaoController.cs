@@ -38,16 +38,9 @@ namespace ColetaApi.Controllers
             this.configuration = configuration;
         }
 
-        // GET: api/Perguntas
-        [HttpGet]
-        public Task<List<PerguntaDto>> GetAsync([FromQuery] bool listaSimplificada = false)
-        {
-            return GetInternalAsync(listaSimplificada);
-        }
-
         [HttpPost("")]
         [AllowAnonymous]
-        public async Task<ActionResult> PostAsync([FromBody] LoginDto login)
+        public async Task<ActionResult> PostAutenticacaoAsync([FromBody] LoginDto login)
         {
             var usuario = await db.Usuario.FirstOrDefaultAsync(u => u.Login == login.Usuario);
 
@@ -76,42 +69,6 @@ namespace ColetaApi.Controllers
             }
 
             return BadRequest("Could not create token");
-        }
-
-    // GET: api/Perguntas/5
-    [HttpGet("{id}")]
-        public async Task<ActionResult<PerguntaDto>> GetAsync(int id)
-        {
-            var pergunta = await db.Pergunta.Include(p => p.OpcaoRespostaPergunta)
-                                            .Include(p => p.IdTipoPerguntaNavigation)
-                                            .FirstOrDefaultAsync(p => p.Id == id);
-            if (pergunta == null)
-                return NotFound();
-
-            return Ok(new PerguntaDto(pergunta));
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
-
-        internal async Task<List<PerguntaDto>> GetInternalAsync(bool listaSimplificada = false, int? idQuestionario = null)
-        {
-            IQueryable<Pergunta> basePerguntas = db.Pergunta;
-            if (!listaSimplificada)
-                basePerguntas = basePerguntas.Include(p => p.OpcaoRespostaPergunta).Include(p => p.IdTipoPerguntaNavigation);
-
-            return await (from pergunta in basePerguntas
-                          //where pergunta.FlgAtivo == true
-                          select pergunta).ToListAsync(p => new PerguntaDto(p));
         }
     }
 }

@@ -26,13 +26,13 @@ namespace ColetaApi.Controllers
         }
 
         [HttpGet]
-        public Task<List<QuestionarioDto>> GetAsync()
+        public Task<List<QuestionarioDto>> GetQuestionariosAsync()
         {
             return db.Questionario.ToListAsync(p => new QuestionarioDto(p));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<QuestionarioDto>> GetAsync(int id)
+        public async Task<ActionResult<QuestionarioDto>> GetQuestionarioAsync(int id)
         {
             var questionario = await db.Questionario.FindAsync(id);
             if (questionario == null)
@@ -42,7 +42,7 @@ namespace ColetaApi.Controllers
         }
 
         [HttpGet("{id}/Perguntas")]
-        public async Task<ActionResult<IEnumerable<PerguntaDto>>> GetPerguntasAsync(int id, [FromQuery] bool listaSimplificada = true)
+        public async Task<ActionResult<IEnumerable<PerguntaDto>>> GetPerguntasQuestionarioAsync(int id, [FromQuery] bool listaSimplificada = true)
         {
             var questionario = await db.Questionario.FindAsync(id);
             if (questionario == null)
@@ -53,7 +53,7 @@ namespace ColetaApi.Controllers
 
 
         [HttpPost("{id}/Respostas")]
-        public async Task<ActionResult> PostRespostas(int id, [FromBody] ColetaDto dados)
+        public async Task<ActionResult> PostRespostasAsync(int id, [FromBody] ColetaDto dados)
         {
             var idUsuario = User.GetUserId();
 
@@ -88,25 +88,6 @@ namespace ColetaApi.Controllers
             await db.SaveChangesAsync();
 
             return NoContent();
-        }
-
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

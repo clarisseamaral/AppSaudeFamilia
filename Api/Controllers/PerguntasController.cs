@@ -32,14 +32,14 @@ namespace ColetaApi.Controllers
 
         // GET: api/Perguntas
         [HttpGet]
-        public Task<List<PerguntaDto>> GetAsync([FromQuery] bool listaSimplificada = false)
+        public Task<List<PerguntaDto>> GetPerguntasAsync([FromQuery] bool listaSimplificada = false)
         {
             return GetInternalAsync(listaSimplificada);
         }
 
         // GET: api/Perguntas/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<PerguntaDto>> GetAsync(int id)
+        public async Task<ActionResult<PerguntaDto>> GetPerguntaAsync(int id)
         {
             var pergunta = await db.Pergunta.Include(p => p.OpcaoRespostaPergunta)
                                             .Include(p => p.IdTipoPerguntaNavigation)
@@ -48,24 +48,6 @@ namespace ColetaApi.Controllers
                 return NotFound();
 
             return Ok(new PerguntaDto(pergunta));
-        }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
 
         internal async Task<List<PerguntaDto>> GetInternalAsync(bool listaSimplificada = false, int? idQuestionario = null)
