@@ -19,26 +19,32 @@
                 @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
             </div>
-            <br/>
-            @foreach (var item in Model.Perguntas)
-            {
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox"
-                               name="SelectedPerguntas"
-                               value="@item.IdPergunta" /> @item.Descricao
-                        </label>
-                    </div>
-                }
-        </div>
+            <div class="form-group">
+                <br />
+                <br />
+                @Html.Label("Selecione as perguntas:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @foreach (var item in Model.Perguntas)
+                    {
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"
+                                       name="SelectedPerguntas"
+                                       value="@item.IdPergunta" /> @item.Descricao
+                                </label>
+                            </div>
+                        }
+                </div>
+            </div>
+            </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                @Html.ActionLink("Cancelar", "Salvar", null, new { @class = "btn btn-primary" })
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-primary" })
+                    <input type="submit" value="Salvar" class="btn btn-default" />
+                </div>
             </div>
         </div>
-    </div>
 }
 
 @*<script type="text/javascript">
