@@ -5,6 +5,7 @@ using ColetaApi.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ColetaApi.Helper;
+using System.Linq;
 
 namespace ColetaApi.Controllers
 {
@@ -73,6 +74,24 @@ namespace ColetaApi.Controllers
                     Valor = resposta.Valor
                 });
             }
+
+            await db.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> PostQuestionarioAsync([FromBody] QuestionarioPerguntaDto dados)
+        {
+            var idUsuario = User.GetUserId();
+
+            var questionario = new Questionario
+            {
+                Nome = dados.Descricao,
+                QuestionarioPergunta = dados.Perguntas.Select(a => new QuestionarioPergunta() { IdPergunta = a.IdPergunta }).ToList()
+            };
+
+            db.Questionario.Add(questionario);
 
             await db.SaveChangesAsync();
 
