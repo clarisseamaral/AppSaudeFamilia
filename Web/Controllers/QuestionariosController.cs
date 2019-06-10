@@ -33,7 +33,7 @@ namespace Coleta.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> Create(QuestionarioPerguntaDto questionario)
+        public async Task<ActionResult> Create(QuestionarioPerguntaDto questionario)
         {
             if (ModelState.IsValid)
             {
@@ -45,10 +45,10 @@ namespace Coleta.Controllers
                         Descricao = questionario.Descricao
                     });
                 }
-                return Json(true);
+                return RedirectToAction("Index");
             }
 
-            return Json(false);
+            return View();
         }
 
         public async Task<ActionResult> Delete(int id)
