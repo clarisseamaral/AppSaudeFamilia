@@ -81,6 +81,7 @@ namespace ColetaApi.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(204)]
         public async Task<ActionResult> PostQuestionarioAsync([FromBody] QuestionarioPerguntaDto dados)
         {
             var idUsuario = User.GetUserId();
@@ -96,6 +97,25 @@ namespace ColetaApi.Controllers
             await db.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        public async Task<ActionResult> DeleteQuestionarioAsync(int id)
+        {
+            var questionario = await db.Questionario.Include(p => p.QuestionarioPergunta).FirstOrDefaultAsync(p => p.Id == id);
+
+            if (questionario == null)
+                return NotFound();
+            else
+            {
+                foreach (var item in questionario.QuestionarioPergunta)
+                    db.QuestionarioPergunta.Remove(item);
+
+                db.Questionario.Remove(questionario);
+                db.SaveChanges();
+                return NoContent();
+            }
         }
     }
 }

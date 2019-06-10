@@ -40,7 +40,7 @@ namespace Coleta.Controllers
                     Api.DefineToken(token.Token);
                 }
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
             catch
             {

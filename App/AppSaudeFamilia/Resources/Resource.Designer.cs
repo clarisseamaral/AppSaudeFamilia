@@ -26,8 +26,6 @@ namespace AppSaudeFamilia
 		
 		public static void UpdateIdValues()
 		{
-			global::AppSaudeFamilia.Servico.Resource.String.ApplicationName = global::AppSaudeFamilia.Resource.String.ApplicationName;
-			global::AppSaudeFamilia.Servico.Resource.String.Hello = global::AppSaudeFamilia.Resource.String.Hello;
 		}
 		
 		public partial class Attribute
@@ -46,14 +44,14 @@ namespace AppSaudeFamilia
 		public partial class Color
 		{
 			
-			// aapt resource value: 0x7f050002
-			public const int button = 2131034114;
+			// aapt resource value: 0x7f040002
+			public const int button = 2130968578;
 			
-			// aapt resource value: 0x7f050000
-			public const int fundo = 2131034112;
+			// aapt resource value: 0x7f040000
+			public const int fundo = 2130968576;
 			
-			// aapt resource value: 0x7f050001
-			public const int primaryText = 2131034113;
+			// aapt resource value: 0x7f040001
+			public const int primaryText = 2130968577;
 			
 			static Color()
 			{
@@ -321,35 +319,32 @@ namespace AppSaudeFamilia
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f040001
-			public const int ApplicationName = 2130968577;
+			// aapt resource value: 0x7f050002
+			public const int ApplicationName = 2131034114;
 			
-			// aapt resource value: 0x7f040007
-			public const int AutenticacaoInvalidaMensagem = 2130968583;
+			// aapt resource value: 0x7f050006
+			public const int AutenticacaoInvalidaMensagem = 2131034118;
 			
-			// aapt resource value: 0x7f040006
-			public const int AutenticacaoInvalidaTitulo = 2130968582;
+			// aapt resource value: 0x7f050005
+			public const int AutenticacaoInvalidaTitulo = 2131034117;
 			
-			// aapt resource value: 0x7f040009
-			public const int ConexaoInternetMensagem = 2130968585;
+			// aapt resource value: 0x7f050008
+			public const int ConexaoInternetMensagem = 2131034120;
 			
-			// aapt resource value: 0x7f040008
-			public const int ConexaoInternetTitulo = 2130968584;
+			// aapt resource value: 0x7f050007
+			public const int ConexaoInternetTitulo = 2131034119;
 			
-			// aapt resource value: 0x7f040000
-			public const int Hello = 2130968576;
+			// aapt resource value: 0x7f050004
+			public const int LoadingMensagem = 2131034116;
 			
-			// aapt resource value: 0x7f040005
-			public const int LoadingMensagem = 2130968581;
+			// aapt resource value: 0x7f050003
+			public const int LoadingTitulo = 2131034115;
 			
-			// aapt resource value: 0x7f040004
-			public const int LoadingTitulo = 2130968580;
+			// aapt resource value: 0x7f050000
+			public const int btnNovaColeta = 2131034112;
 			
-			// aapt resource value: 0x7f040002
-			public const int btnNovaColeta = 2130968578;
-			
-			// aapt resource value: 0x7f040003
-			public const int btnSincronizarColeta = 2130968579;
+			// aapt resource value: 0x7f050001
+			public const int btnSincronizarColeta = 2131034113;
 			
 			static String()
 			{

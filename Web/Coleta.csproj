@@ -187,7 +187,9 @@
     <Compile Include="ColetaApiClient\Models\DetalhesRespostaDto.cs" />
     <Compile Include="ColetaApiClient\Models\LoginDto.cs" />
     <Compile Include="ColetaApiClient\Models\PerguntaDto.cs" />
+    <Compile Include="ColetaApiClient\Models\PerguntaSelecionadaDto.cs" />
     <Compile Include="ColetaApiClient\Models\QuestionarioDto.cs" />
+    <Compile Include="ColetaApiClient\Models\QuestionarioPerguntaDto.cs" />
     <Compile Include="ColetaApiClient\Models\RespostaDto.cs" />
     <Compile Include="ColetaApiClient\Models\TipoPerguntaDto.cs" />
     <Compile Include="ColetaApiClient\Models\TokenDto.cs" />
@@ -244,6 +246,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewsModel\CadastroColetor.cs" />
     <Compile Include="ViewsModel\CadastroPergunta.cs" />
+    <Compile Include="ViewsModel\QuestionarioPerguntaDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -314,6 +317,7 @@
     <Content Include="Views\ColetasResposta\Index.cshtml" />
     <Content Include="Views\ColetasResposta\Details.cshtml" />
     <Content Include="Views\Questionarios\Index.cshtml" />
+    <Content Include="Views\Questionarios\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

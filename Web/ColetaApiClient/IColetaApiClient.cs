@@ -115,6 +115,16 @@ namespace ColetaApi
         /// </param>
         Task<HttpOperationResponse<IList<QuestionarioDto>>> GetQuestionariosWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <param name='dados'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse> PostQuestionarioWithHttpMessagesAsync(QuestionarioPerguntaDto dados = default(QuestionarioPerguntaDto), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
         /// <param name='id'>
         /// </param>
         /// <param name='customHeaders'>
@@ -124,6 +134,16 @@ namespace ColetaApi
         /// The cancellation token.
         /// </param>
         Task<HttpOperationResponse<QuestionarioDto>> GetQuestionarioWithHttpMessagesAsync(int id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name='id'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse> DeleteQuestionarioWithHttpMessagesAsync(int id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='id'>
         /// </param>

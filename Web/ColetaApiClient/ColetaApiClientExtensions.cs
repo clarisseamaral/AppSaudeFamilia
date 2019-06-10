@@ -214,6 +214,29 @@ namespace ColetaApi
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='dados'>
+            /// </param>
+            public static void PostQuestionario(this IColetaApiClient operations, QuestionarioPerguntaDto dados = default(QuestionarioPerguntaDto))
+            {
+                Task.Factory.StartNew(s => ((IColetaApiClient)s).PostQuestionarioAsync(dados), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='dados'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task PostQuestionarioAsync(this IColetaApiClient operations, QuestionarioPerguntaDto dados = default(QuestionarioPerguntaDto), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.PostQuestionarioWithHttpMessagesAsync(dados, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='id'>
             /// </param>
             public static QuestionarioDto GetQuestionario(this IColetaApiClient operations, int id)
@@ -235,6 +258,29 @@ namespace ColetaApi
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            public static void DeleteQuestionario(this IColetaApiClient operations, int id)
+            {
+                Task.Factory.StartNew(s => ((IColetaApiClient)s).DeleteQuestionarioAsync(id), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteQuestionarioAsync(this IColetaApiClient operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.DeleteQuestionarioWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <param name='operations'>

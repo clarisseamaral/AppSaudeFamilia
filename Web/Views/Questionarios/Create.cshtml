@@ -1,0 +1,78 @@
+﻿@model Coleta.ViewsModel.QuestionarioPerguntaDto
+
+@{
+    ViewBag.Title = "Cadastro";
+}
+
+<h2>Cadastro</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
+            </div>
+            <br/>
+            @foreach (var item in Model.Perguntas)
+            {
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"
+                               name="SelectedPerguntas"
+                               value="@item.IdPergunta" /> @item.Descricao
+                        </label>
+                    </div>
+                }
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ActionLink("Cancelar", "Salvar", null, new { @class = "btn btn-primary" })
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+@*<script type="text/javascript">
+   $("body").on("click", "#btnSalvar", function () {
+
+            var respostas = new Array();
+            $("#tbOpcoesResposta TBODY TR").each(function () {
+                var row = $(this);
+                var resposta = {};
+                resposta.opcao = row.find("TD").eq(1).html();
+                respostas.push(resposta);
+            });
+
+            var pergunta = {
+                opcaoRespostaPerguntas : respostas,
+                descricao: $('#Pergunta_Descricao').val(),
+                idTipoPergunta: $('#Pergunta_IdTipoPergunta').val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Create", "Questionarios")",
+                data: JSON.stringify({ pergunta: pergunta }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                if (response) {
+                alert("Salvo com sucesso!")
+                window.location = "Index"
+                } else {
+                alert("Verifique os campos preenchidos!");
+                }
+                }
+                });
+                });
+                });
+</script>*@

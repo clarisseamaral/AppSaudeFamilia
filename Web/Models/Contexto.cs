@@ -83,5 +83,6 @@ namespace Coleta.Models
         }
 
         public System.Data.Entity.DbSet<ColetaApi.Models.QuestionarioDto> QuestionarioDtoes { get; set; }
+
     }
 }
