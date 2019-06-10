@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ColetaApi.Models.ColetaRespostaDto>
+
+@{
+    ViewBag.Title = "Coletas";
+}
+
+<h2>Index</h2>
+
+
+@using (Html.BeginForm())
+{
+    <p style="padding-top: 30px;">
+        Descrição: @Html.TextBox("SearchString")<br />
+    </p>
+    <p style="text-align:right">
+        <input type="submit" value="Pesquisar" class="btn btn-primary" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Usuário
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Data)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomeUsuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Data)
+            </td>
+            <td>
+                @Html.ActionLink(" ", "Details", "ColetasResposta", new { id = item.IdColeta }, new { @class = "glyphicon glyphicon-file" })
+            </td>
+        </tr>
+    }
+
+</table>

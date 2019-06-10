@@ -54,9 +54,10 @@ namespace ColetaApi.Controllers
 
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
         public async Task<ActionResult> DeletePerguntaAsync(int id)
         {
-            var pergunta = await db.Pergunta.FindAsync(id);
+            var pergunta = await db.Pergunta.Include(p => p.OpcaoRespostaPergunta).FirstOrDefaultAsync(p => p.Id == id);
 
             if (pergunta == null)
                 return NotFound();

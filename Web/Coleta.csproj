@@ -183,6 +183,7 @@
     <Compile Include="ColetaApiClient\IColetaApiClient.cs" />
     <Compile Include="ColetaApiClient\Models\AlternativaDto.cs" />
     <Compile Include="ColetaApiClient\Models\ColetaDto.cs" />
+    <Compile Include="ColetaApiClient\Models\ColetaRespostaDto.cs" />
     <Compile Include="ColetaApiClient\Models\LoginDto.cs" />
     <Compile Include="ColetaApiClient\Models\PerguntaDto.cs" />
     <Compile Include="ColetaApiClient\Models\QuestionarioDto.cs" />
@@ -190,7 +191,6 @@
     <Compile Include="ColetaApiClient\Models\TipoPerguntaDto.cs" />
     <Compile Include="ColetaApiClient\Models\TokenDto.cs" />
     <Compile Include="ColetaApiClient\Models\UsuarioDto.cs" />
-    <Compile Include="Controllers\Api\PerguntasController.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -219,12 +219,11 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\ColetasController.cs" />
+    <Compile Include="Controllers\ColetasRespostaController.cs" />
     <Compile Include="Controllers\ColetoresController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PerguntasController.cs" />
-    <Compile Include="Controllers\Api\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -310,6 +309,7 @@
     <Content Include="Views\Coletores\Create.cshtml" />
     <Content Include="Views\Coletores\Edit.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\ColetasResposta\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

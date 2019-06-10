@@ -81,5 +81,6 @@ namespace Coleta.Models
                 .Property(e => e.senha)
                 .IsUnicode(false);
         }
+
     }
 }
