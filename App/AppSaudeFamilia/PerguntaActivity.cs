@@ -357,7 +357,15 @@ namespace AppSaudeFamilia
         {
             if (requestCode == 3)
             {
-                IsLocationEnabled();
+                try
+                {
+                    locMgr.RequestLocationUpdates(LocationManager.GpsProvider, 1000, 10, this);
+                    locMgr.RequestLocationUpdates(LocationManager.NetworkProvider, 0, 0, this);
+                }
+                catch (Exception)
+                {
+
+                }
             }
         }
 

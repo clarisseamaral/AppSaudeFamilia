@@ -23,7 +23,7 @@ namespace ColetaApi.Controllers
         [HttpGet]
         public async Task<List<ColetaRespostaDto>> GetColetasRespostaAsync()
         {
-            var coletas = await db.Coleta.ToListAsync(c => new ColetaRespostaDto(c));
+            var coletas = await db.Coleta.OrderByDescending(o=> o.Data).ToListAsync(c => new ColetaRespostaDto(c));
 
             foreach (var item in coletas)
                 item.NomeUsuario = db.Usuario.Where(u => u.Id == item.IdUsuario).First().Nome;

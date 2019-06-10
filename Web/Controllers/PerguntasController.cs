@@ -14,12 +14,6 @@ namespace Coleta.Controllers
 {
     public class PerguntasController : Controller
     {
-        Contexto db;
-
-        public PerguntasController()
-        {
-            db = new Contexto();
-        }
 
         public async Task<ActionResult> Index(string searchString)
         {

@@ -20,9 +20,9 @@ namespace ColetaApi.Controllers
         }
 
         [HttpGet]
-        public Task<List<QuestionarioDto>> GetQuestionariosAsync()
+        public async Task<ActionResult<List<QuestionarioDto>>> GetQuestionariosAsync()
         {
-            return db.Questionario.ToListAsync(p => new QuestionarioDto(p));
+            return Ok(await db.Questionario.ToListAsync(p => new QuestionarioDto(p)));
         }
 
         [HttpGet("{id}")]

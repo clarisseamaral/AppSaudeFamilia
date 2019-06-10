@@ -82,5 +82,6 @@ namespace Coleta.Models
                 .IsUnicode(false);
         }
 
+        public System.Data.Entity.DbSet<ColetaApi.Models.QuestionarioDto> QuestionarioDtoes { get; set; }
     }
 }
