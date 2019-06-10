@@ -5,6 +5,7 @@ using ColetaApi.Data;
 using ColetaApi.Dtos;
 using ColetaApi.Helper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ColetaApi.Controllers
 {
@@ -19,9 +20,8 @@ namespace ColetaApi.Controllers
             this.db = db;
         }
 
-        // GET: api/Coletas
         [HttpGet]
-        public async Task<List<ColetaRespostaDto>> GetColetasAsync()
+        public async Task<List<ColetaRespostaDto>> GetColetasRespostaAsync()
         {
             var coletas = await db.Coleta.ToListAsync(c => new ColetaRespostaDto(c));
 
@@ -30,5 +30,21 @@ namespace ColetaApi.Controllers
 
             return coletas;
         }
+
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<DetalhesRespostaDto>>> GetColetasRespostaDetalhesAsync(int id)
+        {
+            var coletas = await db.RespostaColeta.Include(c => c.IdPerguntaNavigation)
+                                                        .Include(c => c.IdOpcaoRespostaNavigation)
+                                                        .Where(c=> c.IdColeta == id)
+                                                        .ToListAsync(c => new DetalhesRespostaDto(c));
+
+            if (coletas == null)
+                return NotFound();
+
+            return Ok(coletas);
+        }
+
     }
 }

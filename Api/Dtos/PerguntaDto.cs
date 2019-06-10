@@ -15,11 +15,14 @@ namespace ColetaApi.Dtos
 
         public PerguntaDto(Pergunta pergunta)
         {
-            Id = pergunta.Id;
-            Descricao = pergunta.Descricao;
-            IdTipoPergunta = pergunta.IdTipoPergunta;
-            TipoPergunta = pergunta.IdTipoPerguntaNavigation?.Descricao;
-            Alternativas = pergunta.OpcaoRespostaPergunta?.Select(o => new AlternativaDto(o));
+            if (pergunta!= null)
+            {
+                Id = pergunta.Id;
+                Descricao = pergunta.Descricao;
+                IdTipoPergunta = pergunta.IdTipoPergunta;
+                TipoPergunta = pergunta.IdTipoPerguntaNavigation?.Descricao;
+                Alternativas = pergunta.OpcaoRespostaPergunta?.Select(o => new AlternativaDto(o));
+            }
         }
 
         [Required]

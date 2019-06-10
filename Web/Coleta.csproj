@@ -184,6 +184,7 @@
     <Compile Include="ColetaApiClient\Models\AlternativaDto.cs" />
     <Compile Include="ColetaApiClient\Models\ColetaDto.cs" />
     <Compile Include="ColetaApiClient\Models\ColetaRespostaDto.cs" />
+    <Compile Include="ColetaApiClient\Models\DetalhesRespostaDto.cs" />
     <Compile Include="ColetaApiClient\Models\LoginDto.cs" />
     <Compile Include="ColetaApiClient\Models\PerguntaDto.cs" />
     <Compile Include="ColetaApiClient\Models\QuestionarioDto.cs" />
@@ -310,6 +311,7 @@
     <Content Include="Views\Coletores\Edit.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\ColetasResposta\Index.cshtml" />
+    <Content Include="Views\ColetasResposta\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

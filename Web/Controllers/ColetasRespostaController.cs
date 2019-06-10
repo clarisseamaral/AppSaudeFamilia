@@ -18,7 +18,7 @@ namespace Coleta.Controllers
         {
             using (var cliente = Api.CriaCliente())
             {
-                var coletas = await cliente.GetColetasAsync();
+                var coletas = await cliente.GetColetasRespostaAsync();
 
                 if (!String.IsNullOrEmpty(searchString))
                     coletas = coletas.Where(s => s.NomeUsuario.Contains(searchString)).ToList();
@@ -28,12 +28,13 @@ namespace Coleta.Controllers
         }
 
         // GET: ColetasResposta/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-
-
-
-            return View();
+            using (var cliente = Api.CriaCliente())
+            {
+                var coleta = await cliente.GetColetasRespostaDetalhesAsync(id);
+                return View(coleta);
+            }
         }
         
     }

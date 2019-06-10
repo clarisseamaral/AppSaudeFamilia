@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Web.Http;
 using ColetaApi.Data;
 using ColetaApi.Dtos;
 using Microsoft.AspNetCore.Mvc;
@@ -69,11 +63,8 @@ namespace ColetaApi.Controllers
 
             db.Coleta.Add(coleta);
 
-
-
             foreach (var resposta in dados.Respostas)
             {
-                //coleta.RespostaColeta.Add(new RespostaColeta
                 db.RespostaColeta.Add(new RespostaColeta
                 {
                     IdColetaNavigation = coleta,
@@ -82,8 +73,6 @@ namespace ColetaApi.Controllers
                     Valor = resposta.Valor
                 });
             }
-
-
 
             await db.SaveChangesAsync();
 

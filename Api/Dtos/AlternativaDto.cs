@@ -15,8 +15,11 @@ namespace ColetaApi.Dtos
 
         public AlternativaDto(OpcaoRespostaPergunta opcao)
         {
-            Id = opcao.Id;
-            Texto = opcao.Opcao;
+            if (opcao != null)
+            {
+                Id = opcao.Id;
+                Texto = opcao.Opcao;
+            }
         }
 
         [Required]

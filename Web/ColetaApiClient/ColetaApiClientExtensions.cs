@@ -46,9 +46,9 @@ namespace ColetaApi
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IList<ColetaRespostaDto> GetColetas(this IColetaApiClient operations)
+            public static IList<ColetaRespostaDto> GetColetasResposta(this IColetaApiClient operations)
             {
-                return Task.Factory.StartNew(s => ((IColetaApiClient)s).GetColetasAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IColetaApiClient)s).GetColetasRespostaAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -57,9 +57,35 @@ namespace ColetaApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<ColetaRespostaDto>> GetColetasAsync(this IColetaApiClient operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<ColetaRespostaDto>> GetColetasRespostaAsync(this IColetaApiClient operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetColetasWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetColetasRespostaWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            public static IList<DetalhesRespostaDto> GetColetasRespostaDetalhes(this IColetaApiClient operations, int id)
+            {
+                return Task.Factory.StartNew(s => ((IColetaApiClient)s).GetColetasRespostaDetalhesAsync(id), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<DetalhesRespostaDto>> GetColetasRespostaDetalhesAsync(this IColetaApiClient operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetColetasRespostaDetalhesWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

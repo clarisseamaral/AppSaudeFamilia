@@ -1,5 +1,6 @@
 ﻿using ColetaApi.Data;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
 namespace ColetaApi.Dtos
@@ -12,6 +13,8 @@ namespace ColetaApi.Dtos
             IdColeta = coleta.Id;
             Data = coleta.Data;
             IdUsuario = coleta.IdUsuario;
+            Latitude = coleta.Latitude;
+            Longitude = coleta.Longitude;
         }
 
         [DataMember]
@@ -25,6 +28,12 @@ namespace ColetaApi.Dtos
 
         [DataMember]
         public DateTime Data { get; set; }
+
+        [DataMember]
+        public double Latitude { get; set; }
+
+        [DataMember]
+        public double Longitude { get; set; }
 
     }
 }

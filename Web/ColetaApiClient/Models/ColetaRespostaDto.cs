@@ -21,12 +21,14 @@ namespace ColetaApi.Models
         /// <summary>
         /// Initializes a new instance of the ColetaRespostaDto class.
         /// </summary>
-        public ColetaRespostaDto(int? idColeta = default(int?), string nomeUsuario = default(string), int? idUsuario = default(int?), DateTime? data = default(DateTime?))
+        public ColetaRespostaDto(int? idColeta = default(int?), string nomeUsuario = default(string), int? idUsuario = default(int?), DateTime? data = default(DateTime?), double? latitude = default(double?), double? longitude = default(double?))
         {
             IdColeta = idColeta;
             NomeUsuario = nomeUsuario;
             IdUsuario = idUsuario;
             Data = data;
+            Latitude = latitude;
+            Longitude = longitude;
         }
 
         /// <summary>
@@ -48,6 +50,16 @@ namespace ColetaApi.Models
         /// </summary>
         [JsonProperty(PropertyName = "data")]
         public DateTime? Data { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "latitude")]
+        public double? Latitude { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "longitude")]
+        public double? Longitude { get; set; }
 
     }
 }
